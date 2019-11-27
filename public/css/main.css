@@ -1,0 +1,73 @@
+
+#title {
+    padding-bottom: 12px;
+    text-align: center;
+}
+
+#billing-info,
+#billing-amounts {
+    float: right;
+    margin-right: 64px;
+}
+
+#billing-info .field:first-child,
+#billing-info .field:last-child,
+#billing-amounts .field:first-child,
+#billing-amounts .field:last-child,
+#company-details .field-value,
+#customer-details .field-value {
+    font-weight: bold;
+}
+
+#customer-details {
+    margin-left: 32px;
+}
+
+.title-small  {
+    margin-top: 48px;
+}
+
+.subtitle-small {
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+    padding: 20px 0  0 20px;
+    margin-left: 4px;
+}
+
+.form-group .textarea {
+    height: 100%;
+}
+
+/* .subtitle-small.company {
+    padding: 10px;
+}
+
+.subtitle-small.customer {
+    margin-left: 4px;
+} */
+
+/* Fields */
+
+.fields-container {
+    display: flex;
+}
+
+.field {
+    display: flex;
+}
+
+.fields-group {
+    flex-wrap: wrap;
+    margin: 0 0 3em 0;
+    padding: 0;
+}
+
+.field-name {
+    padding-right: 1em;
+}
+
+.field-value {
+    margin-left: auto;
+    margin-right: 0;
+}
