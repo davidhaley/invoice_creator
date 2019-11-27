@@ -1,20 +1,21 @@
 import { dom } from "../../dom";
+import { exampleData } from "../example_data";
 
 const elements = {
     create: {
-        textArea: () => {
+        textArea: ({ textContent }) => {
             const elem = addClasses({
                 classes: dom.styles.textArea.textArea,
                 elem: document.createElement('textarea')
             });
-            elem.id = 'description';
             elem.setAttribute('rows', '1');
+            elem.textContent = textContent || '';
 
             return elem;
         },
         label: ({ labelText }) => {
             const elem = document.createElement('label');
-            elem.setAttribute('for', 'description');
+            elem.setAttribute('for', labelText.toLocaleLowerCase());
             elem.textContent = labelText;
 
             return elem;
@@ -24,7 +25,7 @@ const elements = {
 
 export const components = {
     create: {
-        textArea: ({ labelText }) => {
+        textArea: ({ textContent, labelText }) => {
 
             const formGroup = addClasses({
                 classes: dom.styles.textArea.formGroup,
@@ -32,7 +33,7 @@ export const components = {
             });
 
             formGroup.appendChild(elements.create.label({ labelText }));
-            formGroup.appendChild(elements.create.textArea());
+            formGroup.appendChild(elements.create.textArea({ textContent }));
 
             return formGroup;
         },

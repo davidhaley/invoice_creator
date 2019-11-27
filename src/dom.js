@@ -5,7 +5,11 @@ export const dom = {
         billingInfo: () => document.querySelector('#billing-info'),
         billingAmounts: () => document.querySelector('#billing-amounts'),
         table: () => document.querySelector('#responsive-table'),
-        tableCells: ({ table }) => table.querySelectorAll(`.'Rtable-cell`),
+        tableCells: (table) => {
+            if (table) {
+                return table.querySelectorAll(`.'Rtable-cell`)
+            }
+        },
         description: () => document.querySelector(`#description`)
     },
     styles: {

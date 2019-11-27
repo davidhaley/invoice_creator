@@ -6,33 +6,36 @@ import { createCompanyDetails } from './dom/company_details';
 import { createBillingInfo } from './dom/billing_info';
 import { createCustomerDetails } from './dom/customer_details';
 import { createBillingAmounts } from './dom/billing_amounts';
-import { createDescription } from './dom/description';
+import { createDescription, applyAutoHeight } from './dom/description';
+import { exampleData } from './dom/example_data';
 
-dom.select.companyDetails().appendChild(createCompanyDetails());
-dom.select.billingInfo().appendChild(createBillingInfo());
-dom.select.customerDetails().appendChild(createCustomerDetails());
-dom.select.description().appendChild(createDescription());
-dom.select.table().appendChild(createTable({ data: [] }));
-dom.select.billingAmounts().appendChild(createBillingAmounts());
+const handlers = {
+    companyDetails: (data) => createCompanyDetails(data),
+    billingInfo: (data) => createBillingInfo(data),
+    customerDetails: (data) => createCustomerDetails(data),
+    description: (data) => applyAutoHeight({ element: createDescription(data) }),
+    table: (data) => createTable(data),
+    billingAmounts: (data) => createBillingAmounts(data)
+}
 
-
-
-
-const autoSizeDescriptionTextArea = (() => {
-    jQuery.fn.extend({
-        autoHeight: function() {
-            function autoHeight_(element) {
-                return jQuery(element).css({
-                    'height': 'auto',
-                    'overflow-y': 'hidden'
-                }).height(element.scrollHeight);
+const populateInvoice = ({ data }) => {
+    for (const [domContainerKey, domContainerSelectorFn] of Object.entries(dom.select)) {
+        if (Object.keys(handlers).includes(domContainerKey)) {
+            const containerElement = domContainerSelectorFn();
+            const outputElement = handlers[domContainerKey](data);
+            if (containerElement && outputElement) {
+                containerElement.appendChild(outputElement);
             }
-            return this.each(function() {
-                autoHeight_(this).on('input', function() {
-                    autoHeight_(this);
-                });
-            });
         }
-    });
-    $('#description').autoHeight();
-})();
+    }
+    // dom.select.companyDetails().appendChild(createCompanyDetails(data));
+    // dom.select.billingInfo().appendChild(createBillingInfo(data));
+    // dom.select.customerDetails().appendChild(createCustomerDetails(data));
+    // dom.select.description().appendChild(
+    //     applyAutoHeight({ element: createDescription(data) })
+    // );
+    // dom.select.table().appendChild(createTable(data));
+    // dom.select.billingAmounts().appendChild(createBillingAmounts(data));
+}
+
+populateInvoice({ data: exampleData });

@@ -2,14 +2,15 @@ import { dom } from "../../dom";
 
 const elements = {
     create: {
-        headerCell: () => {
+        headerCell: ({ name }) => {
             const elem = addClasses({
                 classes: dom.styles.table.headerCell,
                 elem: document.createElement('div')
             });
+            elem.textContent = name;
             return elem;
         },
-        cell: ({ placeholderText }) => {
+        cell: ({ input }) => {
             const elem = addClasses({
                 classes: dom.styles.table.cell,
                 elem: document.createElement('div')
@@ -30,19 +31,50 @@ const elements = {
                 elem: document.createElement('form')
             });
 
-            const input = addClasses({
-                classes: dom.styles.table.input,
-                elem: document.createElement('input')
-            });
-            input.style.width = '100%';
-
-            input.placeholder = placeholderText;
-
             form.appendChild(input);
             formGroup.appendChild(form);
             row.appendChild(formGroup);
             elem.appendChild(row);
 
+            return elem;
+        },
+        input: ({ placeholderText, inputType }) => {
+            const input = addClasses({
+                classes: dom.styles.table.input,
+                elem: document.createElement('input')
+            });
+            input.style.width = '100%';
+            input.placeholder = placeholderText;
+            input.type = inputType;
+
+            return input;
+        },
+        radioInput: ({ groupName, selectorName }) => {
+            const input = addClasses({
+                classes: dom.styles.table.input,
+                elem: document.createElement('input')
+            });
+            input.type = 'radio';
+            input.name = groupName;
+            input.value = selectorName;
+
+            return input;
+        },
+        radioContainer: () => {
+            const elem = document.createElement('div');
+            elem.style.display = 'contents';
+            return elem;
+        },
+        label: ({ radioOptionName }) => {
+            const elem = document.createElement('label');
+            elem.setAttribute('for', radioOptionName);
+            elem.textContent = radioOptionName;
+
+            return elem;
+        },
+        column: () => {
+            const elem = document.createElement('div')
+            elem.classList.add('col');
             return elem;
         }
     }
@@ -59,8 +91,7 @@ export const components = {
         headerRow: ({ table, columns }) => {
             return columns.reduce((table, curr) => {
                 if (table)  {
-                    const headerCell = elements.create.headerCell();
-                    headerCell.textContent = curr.name;
+                    const headerCell = elements.create.headerCell({ name: curr.name });
                     table.appendChild(headerCell);
                     return table;
                 }
@@ -69,13 +100,57 @@ export const components = {
         row: ({ table, columns }) => {
             return columns.reduce((table, curr) => {
                 if (table)  {
-                    const cell = elements.create.cell({ placeholderText: curr.placeholder });
-                    table.appendChild(cell);
+                    if (curr.inputType === 'radio') {
+
+                        const container = elements.create.radioContainer();
+                        const radioColumns = createRadioColumns({ columnData: curr });
+
+                        for (const column of radioColumns) {
+                            container.appendChild(column);
+                        }
+
+                        table.appendChild(
+                            elements.create.cell({ input: container })
+                        );
+                    } else {
+                        const input = elements.create.input({
+                            placeholderText: curr.placeholder,
+                            inputType: curr.inputType
+                        });
+
+                        table.appendChild(
+                            elements.create.cell({ input })
+                        );
+                    }
+
                     return table;
                 }
             }, table);
         }
     }
+}
+
+const createRadioColumns = ({ columnData }) => {
+    return columnData.values.reduce((prev, radioOptionName) => {
+        if (prev) {
+
+            const col = elements.create.column();
+
+            col.appendChild(
+                elements.create.radioInput({
+                    groupName: columnData.name,
+                    selectorName: radioOptionName
+                }),
+            );
+
+            col.appendChild(
+                elements.create.label({ radioOptionName })
+            );
+
+            prev.push(col);
+        }
+        return prev;
+    }, []);
 }
 
 

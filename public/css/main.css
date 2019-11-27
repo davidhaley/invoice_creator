@@ -39,6 +39,8 @@
     height: 100%;
 }
 
+input[type="radio"]:checked+label{ font-weight: bold; }
+
 /* .subtitle-small.company {
     padding: 10px;
 }
