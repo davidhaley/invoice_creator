@@ -10,7 +10,8 @@ export const dom = {
                 return table.querySelectorAll(`.'Rtable-cell`)
             }
         },
-        description: () => document.querySelector(`#description`)
+        description: () => document.querySelector(`#description`),
+        actionButtons: () => document.querySelector(`#table-action-buttons`)
     },
     styles: {
         fieldGroup: {
@@ -61,6 +62,17 @@ export const dom = {
             ],
             bootStrapRow: [
                 'row',
+            ],
+            buttonPrimary: [
+                'btn',
+                'btn-primary'
+            ],
+            buttonSecondary: [
+                'btn',
+                'btn-secondary'
+            ],
+            buttonGroup: [
+                'btn-group'
             ]
         },
         textArea: {

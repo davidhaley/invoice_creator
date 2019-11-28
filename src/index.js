@@ -13,15 +13,12 @@ import {
 } from './dom/invoice';
 
 const handlers = {
-    companyDetails: (data) => createCompanyDetails(data),
-    billingInfo: (data) => createBillingInfo(data),
-    customerDetails: (data) => createCustomerDetails(data),
-    description: (data) => applyAutoHeight({ element: createDescription(data) }),
-    table: (data) => {
-        console.log(data);
-        return createTable(data);
-    },
-    billingAmounts: (data) => createBillingAmounts(data)
+    billingAmounts:     (data) => createBillingAmounts(data),
+    billingInfo:        (data) => createBillingInfo(data),
+    companyDetails:     (data) => createCompanyDetails(data),
+    customerDetails:    (data) => createCustomerDetails(data),
+    description:        (data) => applyAutoHeight({ element: createDescription(data) }),
+    table:              (data) => createTable(data),
 }
 
 const populateInvoice = ({ data }) => {

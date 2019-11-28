@@ -57,22 +57,22 @@ export const exampleData = {
     billingInfo: [
         {
             name: 'Date',
-            value: 'Value',
+            value: new Date().toLocaleDateString(),
             editable: false
         },
         {
             name: 'Invoice No.',
-            value: 'Value',
+            value: '534-12331212',
             editable: false
         },
         {
             name: 'CustomerId',
-            value: 'Value',
+            value: '999',
             editable: false
         },
         {
             name: 'Due Date',
-            value: 'Value',
+            value: new Date().toLocaleDateString(),
             editable: false
         },
     ],

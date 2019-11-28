@@ -41,6 +41,10 @@
 
 input[type="radio"]:checked+label{ font-weight: bold; }
 
+#table-action-buttons .btn-secondary {
+    margin: '0 10px 0 0';
+}
+
 /* .subtitle-small.company {
     padding: 10px;
 }
