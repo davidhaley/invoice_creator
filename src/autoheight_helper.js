@@ -6,7 +6,6 @@ export const applyAutoHeight = ({ element }) => {
                 return jQuery(element).css({
                     'height': 'auto',
                     'overflow-y': 'hidden',
-                    'min-height': '50px'
                 }).height(element.scrollHeight);
             }
             return this.each(function() {
@@ -16,6 +15,13 @@ export const applyAutoHeight = ({ element }) => {
             });
         }
     });
-    $(element.querySelector('textarea')).autoHeight();
+    console.log(element.tagName)
+    if (element.tagName === 'TEXTAREA') {
+        $(element).autoHeight();
+    } else {
+        $(element.querySelector('textarea')).autoHeight();
+    }
+    element.style.height = '100%';
+    element.style.maxHeight = '100px';
     return element;
 };

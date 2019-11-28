@@ -1,5 +1,4 @@
 import '../public/css/main.css';
-import '../src/styles/responsive_table.less';
 import { dom } from './dom';
 import { applyAutoHeight } from './autoheight_helper';
 import { exampleData } from './dom/example_data';
@@ -38,10 +37,28 @@ const populateInvoice = ({ data }) => {
 // <label class="control-label" for="inlineFormInputGroup">Amount</label>
 
 // create class for fields that will be calculated
+// hide rows instead of deleting them (if someone wants to undo a deleted row)
+// save all data in local storage onbeforeunload(),  retrieve and populate on page load
+
 
 populateInvoice({ data: exampleData });
 
-// bootstrapValidate(
-//     '#exampleFormControlTextarea1',
-//     'email:Enter a valid E-Mail Address!'
-// );
+bootstrapValidate(
+    '#cost',
+    'numeric:Please only enter numeric characters!'
+);
+
+bootstrapValidate(
+    '#tax',
+    'numeric:Please only enter numeric characters!'
+);
+
+bootstrapValidate(
+    '#total',
+);
+
+bootstrapValidate(
+    '#quantity',
+    'integer:Please fill out this input field!',
+    'numeric:Please only enter numeric characters!'
+);

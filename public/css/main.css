@@ -64,8 +64,16 @@ strong { color: darken(slategrey,20%); }
     height: 100%;
 }
 
+#form-action-buttons {
+    float: right;
+}
+
 #form-action-buttons .btn-secondary {
     margin: '0 10px 0 0';
+}
+
+#form-action-buttons .btn {
+    margin: 4px;
 }
 
 textarea {

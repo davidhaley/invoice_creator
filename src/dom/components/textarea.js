@@ -8,6 +8,8 @@ const elements = {
                 elem: document.createElement('textarea')
             });
             elem.setAttribute('rows', '1');
+            elem.style.minHeight = '100px';
+            elem.style.maxHeight = '100px';
             elem.textContent = textContent || '';
 
             return elem;

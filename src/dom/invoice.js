@@ -10,25 +10,24 @@ export const createCompanyDetails = ({ companyDetails }) => fieldComponents.crea
 export const createCustomerDetails = ({ customerDetails }) => fieldComponents.create.fieldGroup({ fields: customerDetails });
 export const createDescription = ({ description }) => textAreaComponents.create.textArea({ labelText: 'Description', textContent: description });
 
-
 export const createForm = ({ form }) => {
 
     const formElem = formComponents.create.form();
 
     formComponents.create.headerRow({ formElem, columns: form.columns });
 
-    const actionButtonsContainer = dom.select.actionButtons().appendChild(
-        buttonComponents.create.buttonGroup()
-    );
 
-    actionButtonsContainer.appendChild(
+    const rowActionsButtonsGroup = buttonComponents.create.buttonGroup();
+    const submitButtonGroup = buttonComponents.create.buttonGroup();
+
+    rowActionsButtonsGroup.appendChild(
         buttonComponents.create.buttonSecondary({
             name: 'Delete Line-Item',
             onClick: () => deleteRow({ formElem }),
         })
     );
 
-    actionButtonsContainer.appendChild(
+    rowActionsButtonsGroup.appendChild(
         buttonComponents.create.buttonPrimary({
             name: 'Add Line-Item',
             onClick: () => addRow({
@@ -38,16 +37,18 @@ export const createForm = ({ form }) => {
         })
     );
 
-    actionButtonsContainer.appendChild(
+    submitButtonGroup.appendChild(
         buttonComponents.create.buttonSubmit()
     );
+
+    const actionButtonsContainer = dom.select.actionButtons();
+    actionButtonsContainer.appendChild(rowActionsButtonsGroup);
+    actionButtonsContainer.appendChild(submitButtonGroup);
 
     formElem.addEventListener('keyup', (e) => updateMoneyFields());
 
     // Optional: populate with data
     // console.log(getFormRows({ form, startIndex: 1, columnsCount: columns: form.columns.length }));
-
-    updateMoneyFields();
 
     return formElem;
 }
@@ -55,12 +56,18 @@ export const createForm = ({ form }) => {
 const aggregateAmounts = ({ rows = [] }) => {
     return rows.reduce((prev, curr) => {
         if (prev) {
-            const cost = curr.querySelector(`input[name="cost"]`);
-            const quantity = curr.querySelector(`input[name="quantity"]`);
-            const amount = curr.querySelector(`input[name="amount"]`);
-            if (cost && quantity && amount) {
-                amount.value = (cost.value * quantity.value);
-                prev.push(amount.value);
+            const cost = currency(curr.querySelector(`input[name="cost"]`).value);
+            const quantity = currency(curr.querySelector(`input[name="quantity"]`).value);
+            const amountElem = curr.querySelector(`input[name="amount"]`);
+
+            console.log(`
+            cost: ${cost},
+            quantity: ${quantity},
+            `)
+
+            if (cost && quantity && amountElem) {
+                amountElem.value = currency(cost).multiply(quantity);
+                prev.push(cost.multiply(quantity));
             }
         }
         return prev;
@@ -68,20 +75,18 @@ const aggregateAmounts = ({ rows = [] }) => {
 }
 
 const calculateSubTotal = ({ amounts = [] }) => {
+    console.log(amounts);
     return amounts.reduce((prev, curr) => {
-        if (prev) {
-            return (parseInt(prev) + parseInt(curr));
-        }
-        return prev;
-    }, [0])
+        return currency(prev).add(currency(curr));
+    }, 0)
 }
 
 const calculateTax = ({ subTotal }) => {
-    return Math.floor(subTotal * 0.05);
+    return currency(subTotal).multiply(currency(0.05));
 }
 
 const calculateTotal = ({ subTotal, tax })  => {
-    return (parseInt(subTotal) + tax);
+    return currency(subTotal).add(currency(tax));
 }
 
 const updateMoneyFields = () => {
@@ -91,22 +96,26 @@ const updateMoneyFields = () => {
 
         const amounts = aggregateAmounts({ rows });
         console.log(amounts);
+        if (amounts.length > 0) {
+            const subTotal = calculateSubTotal({ amounts });
+            console.log(subTotal);
+            dom.select.subTotal().textContent = `${subTotal}`;
 
-        const subTotal = calculateSubTotal({ amounts });
-        console.log(subTotal);
-        dom.select.subTotal().textContent = `${subTotal}`;
+            const tax = calculateTax({ subTotal });
+            dom.select.tax().textContent = `${tax}`;
+            console.log(tax);
 
-        const tax = calculateTax({ subTotal });
-        dom.select.tax().textContent = `${tax}`;
-        console.log(tax);
-
-        const total = calculateTotal({ subTotal, tax });
-        dom.select.total().textContent = `${total}`;
-        console.log(total);
+            const total = calculateTotal({ subTotal, tax });
+            dom.select.total().textContent = `${total}`;
+            console.log(total);
+        }
     }
 }
 
-const addRow = ({ formElem, columns }) => formComponents.create.row({ formElem, columns });
+const addRow = ({ formElem, columns }) => {
+    formComponents.create.row({ formElem, columns });
+    updateMoneyFields();
+};
 
 const deleteRow = ({ formElem }) => {
     console.log('hey');

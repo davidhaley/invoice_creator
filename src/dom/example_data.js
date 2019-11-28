@@ -53,7 +53,7 @@ export const exampleData = {
             editable: false
         }
     ],
-    description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque feugiat tincidunt sagittis. Sed non cursus orci, imperdiet dictum ex. Etiam vel metus ac nulla sollicitudin ullamcorper sed id velit. Duis viverra neque sit amet dolor fermentum auctor. Fusce eget ipsum a enim scelerisque ultricies eget nec odio. Mauris nec nisi ut elit ultrices mattis ut nec odio. Ut vestibulum maximus ipsum vel sodales. Etiam imperdiet sem id fermentum varius. Sed maximus nulla tempor nulla consectetur auctor. Praesent facilisis ligula in nibh sollicitudin, ac sollicitudin lacus convallis. Vestibulum dignissim ipsum id est consectetur tincidunt. In ut leo nunc. Fusce imperdiet commodo ipsum, at maximus purus eleifend et. Mauris id odio nec dolor lobortis pulvinar quis quis dolor.`,
+    description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque feugiat tincidunt sagittis. Sed non cursus orci, imperdiet dictum ex. Etiam vel metus ac nulla sollicitudin ullamcorper sed id velit. Duis viverra neque sit amet dolor fermentum auctor.`,
     billingInfo: [
         {
             name: 'Date',
@@ -121,22 +121,25 @@ export const exampleData = {
                 placeholder: '',
                 data: null,
                 inputType: 'number',
-                field: 'quantity'
+                field: 'quantity',
+                step: '0'
             },
             {
-                name: 'Cost ($/Units)',
+                name: 'Cost (Per Unit)',
                 required: true,
                 placeholder: '',
                 data: null,
                 inputType: 'number',
-                field: 'cost'
+                field: 'cost',
+                step: '0.01' // 2 Decimals
             },
             {
                 name: 'Amount',
                 required: true,
                 placeholder: '',
                 data: null,
-                field: 'amount'
+                field: 'amount',
+                step: '0.01' // 2 Decimals
             },
         ]
     }

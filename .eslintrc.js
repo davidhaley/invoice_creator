@@ -17,7 +17,8 @@ module.exports = {
         "document": "readonly",
         "__dirname": "readonly",
         "process": "readonly",
-        "bootstrapValidate": "readonly"
+        "bootstrapValidate": "readonly",
+	"currency": "readonly"
     },
     "parserOptions": {
         "ecmaVersion": 2018,

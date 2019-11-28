@@ -1,4 +1,5 @@
 import { dom, addClasses } from "../../dom";
+import { applyAutoHeight } from "../../autoheight_helper";
 
 const elements = {
     create: {
@@ -38,7 +39,7 @@ const elements = {
 
             return elem;
         },
-        input: ({ id, placeholderText, inputType, name }) => {
+        input: ({ id, placeholderText, inputType, name, step }) => {
             const input = addClasses({
                 classes: dom.styles.form.input,
                 elem: document.createElement('input')
@@ -47,6 +48,9 @@ const elements = {
             input.placeholder = placeholderText;
             input.type = inputType;
             input.name = name;
+            input.step = step;
+            input.value = "0";
+
             if (name === 'amount') {
                 input.setAttribute('readonly', true);
             }
@@ -128,16 +132,19 @@ export const components = {
 
                     let input;
                     if (curr.inputType === 'text') {
-                        input = elements.create.textArea({
-                            rows: '1',
-                            placeholder: curr.placeholder
+                        input = applyAutoHeight({
+                            element: elements.create.textArea({
+                                rows: '1',
+                                placeholder: curr.placeholder
+                            })
                         });
                     } else {
                         input = elements.create.input({
                             id: curr.id,
                             placeholderText: curr.placeholder,
                             inputType: curr.inputType,
-                            name: curr.field
+                            name: curr.field,
+                            step: curr.step
                         });
                     }
 
@@ -166,16 +173,19 @@ export const components = {
 
                     let input;
                     if (curr.inputType === 'text') {
-                        input = elements.create.textArea({
-                            rows: '1',
-                            placeholder: curr.placeholder
+                        input = applyAutoHeight({
+                            element: elements.create.textArea({
+                                rows: '1',
+                                placeholder: curr.placeholder
+                            })
                         });
                     } else {
                         input = elements.create.input({
                             id: curr.id,
                             placeholderText: curr.placeholder,
                             inputType: curr.inputType,
-                            name: curr.field
+                            name: curr.field,
+                            step: curr.step
                         });
                     }
 

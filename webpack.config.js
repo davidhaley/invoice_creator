@@ -59,6 +59,10 @@ const commonConfig = merge([
                     {
                         module: 'bootstrapValidate',
                         entry: 'https://cdn.rawgit.com/PascaleBeier/bootstrap-validate/v2.2.0/dist/bootstrap-validate.js'
+                    },
+                    {
+                        module: 'currency',
+                        entry: 'https://unpkg.com/currency.js/dist/currency.min.js'
                     }
                 ],
             }),

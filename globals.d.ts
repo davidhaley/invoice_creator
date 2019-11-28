@@ -3,3 +3,4 @@ interface Element {
 }
 
 declare var bootstrapValidate: any;
+declare var currency: any;
