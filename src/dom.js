@@ -4,14 +4,14 @@ export const dom = {
         customerDetails: () => document.querySelector('#customer-details'),
         billingInfo: () => document.querySelector('#billing-info'),
         billingAmounts: () => document.querySelector('#billing-amounts'),
-        table: () => document.querySelector('#responsive-table'),
-        tableCells: (table) => {
-            if (table) {
-                return table.querySelectorAll(`.'Rtable-cell`)
-            }
-        },
+        form: () => document.querySelector('#responsive-form'),
+        // tableCells: (form) => {
+        //     if (form) {
+        //         return form.querySelectorAll(`.'Rtable-cell`)
+        //     }
+        // },
         description: () => document.querySelector(`#description`),
-        actionButtons: () => document.querySelector(`#table-action-buttons`)
+        actionButtons: () => document.querySelector(`#form-action-buttons`)
     },
     styles: {
         fieldGroup: {
@@ -31,37 +31,45 @@ export const dom = {
                 'row',
             ]
         },
-        table: {
-            table: [
-                'Rtable',
-                'Rtable--head',
-                'Rtable--6cols',
-                'Rtable--collapse'
-            ],
+        form: {
             header: [
 
             ],
-            headerCell: [
-                'Rtable-cell',
-                'Rtable-cell--head'
+            // headerCell: [
+            //     'Rtable-cell',
+            //     'Rtable-cell--head'
+            // ],
+            // cell: [
+            //     'Rtable-cell',
+            // ],
+            formRow: [
+                'form-row',
+                'align-items-center'
             ],
-            cell: [
-                'Rtable-cell',
+            col1: [
+                'col-sm-12',
+                'col-md-2',
+                'col-lg-2',
+                'col-xl-2',
+                'text-center'
             ],
-            form: [
-                'form-inline'
-            ],
-            formGroup: [
-                'form-group',
+            col2: [
+                'col-sm-12',
+                'col-md-3',
+                'col-lg-3',
+                'col-xl-4',
+                'text-center'
             ],
             input: [
                 'form-control',
-                'input-lg'
-                // 'mb-2',
-                // 'mr-sm-2'
+                'text-center'
             ],
-            bootStrapRow: [
-                'row',
+            inputGroup: [
+                'input-group',
+                'mb-2'
+            ],
+            textArea: [
+                'form-control'
             ],
             buttonPrimary: [
                 'btn',
@@ -73,6 +81,9 @@ export const dom = {
             ],
             buttonGroup: [
                 'btn-group'
+            ],
+            label: [
+                'control-label'
             ]
         },
         textArea: {

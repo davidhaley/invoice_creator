@@ -11,14 +11,13 @@ module.exports = {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly",
         "$": "readonly",
-        "Twilio": "readonly",
         "log": "readonly",
         "axios": "readonly",
         "console": "readonly",
         "document": "readonly",
         "__dirname": "readonly",
         "process": "readonly",
-        "swal": "readonly"
+        "bootstrapValidate": "readonly"
     },
     "parserOptions": {
         "ecmaVersion": 2018,

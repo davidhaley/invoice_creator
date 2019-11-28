@@ -93,7 +93,7 @@ export const exampleData = {
             editable: false
         },
     ],
-    table: {
+    form: {
         data: [],
         columns: [
             {
@@ -101,52 +101,40 @@ export const exampleData = {
                 required: true,
                 placeholder: '',
                 data: null,
-                fieldType: String,
-                inputType: 'text'
+                inputType: 'text',
+                id: '1',
             },
             {
                 name: 'Description',
                 required: true,
                 placeholder: '',
                 data: null,
-                fieldType: String,
-                inputType: 'text'
+                inputType: 'text',
+                id: '2'
             },
             {
                 name: 'Quantity',
                 required: true,
                 placeholder: '',
                 data: null,
-                fieldType: Number,
-                inputType: 'number'
+                inputType: 'number',
+                id: '3'
             },
             {
-                name: 'Type',
+                name: 'Cost ($/Units)',
                 required: true,
                 placeholder: '',
                 data: null,
-                fieldType: Array,
-                inputType: 'radio',
-                values: [
-                    'Part',
-                    'Labour'
-                ]
-            },
-            {
-                name: 'Cost Rate ($/Units)',
-                required: true,
-                placeholder: '',
-                data: null,
-                fieldType: Number,
-                inputType: 'number'
+                inputType: 'number',
+                id: '4'
             },
             {
                 name: 'Amount',
                 required: true,
                 placeholder: '',
                 data: null,
-                fieldType: Number,
-                inputType: 'number'
+                inputType: 'number',
+                id: '5'
             },
         ]
     }

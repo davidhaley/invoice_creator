@@ -56,6 +56,10 @@ const commonConfig = merge([
                         module: 'popper',
                         entry: 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js',
                     },
+                    {
+                        module: 'bootstrapValidate',
+                        entry: 'https://cdn.rawgit.com/PascaleBeier/bootstrap-validate/v2.2.0/dist/bootstrap-validate.js'
+                    }
                 ],
             }),
         ],

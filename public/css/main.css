@@ -41,8 +41,16 @@
 
 input[type="radio"]:checked+label{ font-weight: bold; }
 
-#table-action-buttons .btn-secondary {
+#form-action-buttons .btn-secondary {
     margin: '0 10px 0 0';
+}
+
+textarea {
+    text-align: center;
+}
+
+form {
+    margin-bottom: 10px;
 }
 
 /* .subtitle-small.company {
@@ -52,6 +60,10 @@ input[type="radio"]:checked+label{ font-weight: bold; }
 .subtitle-small.customer {
     margin-left: 4px;
 } */
+
+.control-label {
+    text-align: center;
+}
 
 /* Fields */
 

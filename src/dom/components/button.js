@@ -13,7 +13,7 @@ const elements = {
         },
         buttonGroup: () => {
             return addClasses({
-                classes: dom.styles.table.buttonGroup,
+                classes: dom.styles.form.buttonGroup,
                 elem: document.createElement('div')
             });
         },
@@ -25,12 +25,12 @@ export const components = {
         buttonPrimary: ({ name, onClick }) => elements.create.button({
             name,
             onClick,
-            classes: dom.styles.table.buttonPrimary
+            classes: dom.styles.form.buttonPrimary
         }),
         buttonSecondary: ({ name, onClick }) => elements.create.button({
             name,
             onClick,
-            classes: dom.styles.table.buttonSecondary
+            classes: dom.styles.form.buttonSecondary
         }),
         buttonGroup: () => elements.create.buttonGroup()
     }

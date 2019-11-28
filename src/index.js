@@ -1,7 +1,6 @@
 import '../public/css/main.css';
 import '../src/styles/responsive_table.less';
 import { dom } from './dom';
-import { createTable } from './dom/table';
 import { applyAutoHeight } from './autoheight_helper';
 import { exampleData } from './dom/example_data';
 import {
@@ -9,7 +8,8 @@ import {
     createBillingInfo,
     createCustomerDetails,
     createDescription,
-    createBillingAmounts
+    createBillingAmounts,
+    createForm
 } from './dom/invoice';
 
 const handlers = {
@@ -18,7 +18,18 @@ const handlers = {
     companyDetails:     (data) => createCompanyDetails(data),
     customerDetails:    (data) => createCustomerDetails(data),
     description:        (data) => applyAutoHeight({ element: createDescription(data) }),
-    table:              (data) => createTable(data),
+    form:              (data) => {
+        const form = createForm(data);
+
+        const btn = document.createElement('button');
+        btn.classList.add('btn');
+        btn.classList.add('btn-primary');
+        btn.type = 'submit';
+        btn.textContent = 'Submit Form';
+        form.appendChild(btn)
+
+        return form;
+    },
 }
 
 const populateInvoice = ({ data }) => {
@@ -31,14 +42,17 @@ const populateInvoice = ({ data }) => {
             }
         }
     }
-    // dom.select.companyDetails().appendChild(createCompanyDetails(data));
-    // dom.select.billingInfo().appendChild(createBillingInfo(data));
-    // dom.select.customerDetails().appendChild(createCustomerDetails(data));
-    // dom.select.description().appendChild(
-    //     applyAutoHeight({ element: createDescription(data) })
-    // );
-    // dom.select.table().appendChild(createTable(data));
-    // dom.select.billingAmounts().appendChild(createBillingAmounts(data));
 }
 
+// toggle control-label and sr-only for responsive form
+// <label class="sr-only" for="inlineFormInputGroup">Amount</label>
+// <label class="control-label" for="inlineFormInputGroup">Amount</label>
+
+// create class for fields that will be calculated
+
 populateInvoice({ data: exampleData });
+
+// bootstrapValidate(
+//     '#exampleFormControlTextarea1',
+//     'email:Enter a valid E-Mail Address!'
+// );
