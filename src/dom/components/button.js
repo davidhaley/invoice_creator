@@ -32,6 +32,15 @@ export const components = {
             onClick,
             classes: dom.styles.form.buttonSecondary
         }),
+        buttonSubmit: () => {
+            const button = elements.create.button({
+                name: 'Submit Form',
+                onClick: () => null,
+                classes: dom.styles.form.buttonPrimary
+            })
+            button.type = 'submit';
+            return button;
+        },
         buttonGroup: () => elements.create.buttonGroup()
     }
 }

@@ -18,18 +18,7 @@ const handlers = {
     companyDetails:     (data) => createCompanyDetails(data),
     customerDetails:    (data) => createCustomerDetails(data),
     description:        (data) => applyAutoHeight({ element: createDescription(data) }),
-    form:              (data) => {
-        const form = createForm(data);
-
-        const btn = document.createElement('button');
-        btn.classList.add('btn');
-        btn.classList.add('btn-primary');
-        btn.type = 'submit';
-        btn.textContent = 'Submit Form';
-        form.appendChild(btn)
-
-        return form;
-    },
+    form:               (data) => createForm(data)
 }
 
 const populateInvoice = ({ data }) => {

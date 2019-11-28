@@ -11,11 +11,12 @@ const elements = {
 
             return elem;
         },
-        fieldValue: ({ value }) => {
+        fieldValue: ({ id, value }) => {
             const elem = addClasses({
                 classes: dom.styles.fieldGroup.fieldValue,
                 elem: document.createElement('div')
             });
+            elem.id = id;
             elem.textContent = value;
 
             return elem;
@@ -36,7 +37,7 @@ export const components = {
                 if (prev)  {
                     const field = components.create.field({
                         fieldName: elements.create.fieldName({ name: curr.name }),
-                        fieldValue: elements.create.fieldValue({ value: curr.value }),
+                        fieldValue: elements.create.fieldValue({ value: curr.value, id: curr.id }),
                     });
 
                     prev.push(field);

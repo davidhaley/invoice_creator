@@ -16,10 +16,10 @@ const elements = {
                 elem: document.createElement('div')
             });
 
-            const row = addClasses({
-                classes: dom.styles.form.bootStrapRow,
-                elem: document.createElement('div')
-            });
+            // const row = addClasses({
+            //     classes: dom.styles.form.bootStrapRow,
+            //     elem: document.createElement('div')
+            // });
 
             const formGroup = addClasses({
                 classes: dom.styles.form.formGroup,
@@ -38,7 +38,7 @@ const elements = {
 
             return elem;
         },
-        input: ({ id, placeholderText, inputType }) => {
+        input: ({ id, placeholderText, inputType, name }) => {
             const input = addClasses({
                 classes: dom.styles.form.input,
                 elem: document.createElement('input')
@@ -46,6 +46,10 @@ const elements = {
             input.id = id;
             input.placeholder = placeholderText;
             input.type = inputType;
+            input.name = name;
+            if (name === 'amount') {
+                input.setAttribute('readonly', true);
+            }
 
             return input;
         },
@@ -93,14 +97,21 @@ const elements = {
             elem.placeholder = placeholder;
 
             return elem;
+        },
+        footer: () => {
+            const elem = document.createElement('div');
+            elem.id = 'form-footer';
+            return elem;
         }
     }
 }
 
 export const components = {
     create: {
-        form: () => {
-            return document.createElement('form');
+        form: ({ submitButton }) => {
+            const form = document.createElement('form');
+            form.appendChild(submitButton);
+            return form;
         },
         headerRow: ({ formElem, columns }) => {
             const formRow = elements.create.formRow();
@@ -119,7 +130,6 @@ export const components = {
 
                     let input;
                     if (curr.inputType === 'text') {
-
                         input = elements.create.textArea({
                             rows: '1',
                             placeholder: curr.placeholder
@@ -128,7 +138,8 @@ export const components = {
                         input = elements.create.input({
                             id: curr.id,
                             placeholderText: curr.placeholder,
-                            inputType: curr.inputType
+                            inputType: curr.inputType,
+                            name: curr.field
                         });
                     }
 
@@ -165,7 +176,8 @@ export const components = {
                         input = elements.create.input({
                             id: curr.id,
                             placeholderText: curr.placeholder,
-                            inputType: curr.inputType
+                            inputType: curr.inputType,
+                            name: curr.field
                         });
                     }
 
@@ -176,6 +188,6 @@ export const components = {
                     return row;
                 }
             }, formRow);
-        }
+        },
     }
 }

@@ -80,17 +80,20 @@ export const exampleData = {
         {
             name: 'Sub Total',
             value: 'Value',
-            editable: false
+            editable: false,
+            id: 'sub-total'
         },
         {
             name: 'Tax',
             value: 'Value',
-            editable: false
+            editable: false,
+            id: 'tax'
         },
         {
             name: 'Total',
             value: 'Value',
-            editable: false
+            editable: false,
+            id: 'total'
         },
     ],
     form: {
@@ -102,7 +105,7 @@ export const exampleData = {
                 placeholder: '',
                 data: null,
                 inputType: 'text',
-                id: '1',
+                field: 'title'
             },
             {
                 name: 'Description',
@@ -110,7 +113,7 @@ export const exampleData = {
                 placeholder: '',
                 data: null,
                 inputType: 'text',
-                id: '2'
+                field: 'description'
             },
             {
                 name: 'Quantity',
@@ -118,7 +121,7 @@ export const exampleData = {
                 placeholder: '',
                 data: null,
                 inputType: 'number',
-                id: '3'
+                field: 'quantity'
             },
             {
                 name: 'Cost ($/Units)',
@@ -126,15 +129,14 @@ export const exampleData = {
                 placeholder: '',
                 data: null,
                 inputType: 'number',
-                id: '4'
+                field: 'cost'
             },
             {
                 name: 'Amount',
                 required: true,
                 placeholder: '',
                 data: null,
-                inputType: 'number',
-                id: '5'
+                field: 'amount'
             },
         ]
     }

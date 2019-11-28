@@ -5,13 +5,11 @@ export const dom = {
         billingInfo: () => document.querySelector('#billing-info'),
         billingAmounts: () => document.querySelector('#billing-amounts'),
         form: () => document.querySelector('#responsive-form'),
-        // tableCells: (form) => {
-        //     if (form) {
-        //         return form.querySelectorAll(`.'Rtable-cell`)
-        //     }
-        // },
         description: () => document.querySelector(`#description`),
-        actionButtons: () => document.querySelector(`#form-action-buttons`)
+        actionButtons: () => document.querySelector(`#form-action-buttons`),
+        subTotal: () => document.querySelector(`#sub-total`),
+        tax: () => document.querySelector(`#tax`),
+        total: () => document.querySelector(`#total`),
     },
     styles: {
         fieldGroup: {
@@ -35,13 +33,6 @@ export const dom = {
             header: [
 
             ],
-            // headerCell: [
-            //     'Rtable-cell',
-            //     'Rtable-cell--head'
-            // ],
-            // cell: [
-            //     'Rtable-cell',
-            // ],
             formRow: [
                 'form-row',
                 'align-items-center'

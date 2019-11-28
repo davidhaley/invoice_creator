@@ -13,7 +13,9 @@ export const createDescription = ({ description }) => textAreaComponents.create.
 
 export const createForm = ({ form }) => {
 
-    const formElem = formComponents.create.form();
+    const formElem = formComponents.create.form({
+        submitButton: buttonComponents.create.buttonSubmit()
+    });
 
     formComponents.create.headerRow({ formElem, columns: form.columns });
 
@@ -41,10 +43,66 @@ export const createForm = ({ form }) => {
         })
     );
 
+    formElem.addEventListener('keyup', (e) => {
+        const rowElems = document.querySelectorAll('.form-row');
+        if (rowElems) {
+            const rows = Array.from(rowElems);
+
+            const amounts = aggregateAmounts({ rows });
+            console.log(amounts);
+
+            const subTotal = calculateSubTotal({ amounts });
+            console.log(subTotal);
+            dom.select.subTotal().textContent = `${subTotal}`;
+
+            const tax = calculateTax({ subTotal });
+            dom.select.tax().textContent = `${tax}`;
+            console.log(tax);
+
+            const total = calculateTotal({ subTotal, tax });
+            dom.select.total().textContent = `${total}`;
+            console.log(total);
+
+
+        }
+    });
+
     // Optional: populate with data
     // console.log(getFormRows({ form, startIndex: 1, columnsCount: columns: form.columns.length }));
 
     return formElem;
+}
+
+const aggregateAmounts = ({ rows = [] }) => {
+    return rows.reduce((prev, curr) => {
+        if (prev) {
+            const cost = curr.querySelector(`input[name="cost"]`);
+            const quantity = curr.querySelector(`input[name="quantity"]`);
+            const amount = curr.querySelector(`input[name="amount"]`);
+            if (cost && quantity && amount) {
+                amount.value = (cost.value * quantity.value);
+                prev.push(amount.value);
+            }
+        }
+        return prev;
+    }, []);
+}
+
+const calculateSubTotal = ({ amounts = [] }) => {
+    return amounts.reduce((prev, curr) => {
+        if (prev) {
+            return (parseInt(prev) + parseInt(curr));
+        }
+        return prev;
+    }, [0])
+}
+
+const calculateTax = ({ subTotal }) => {
+    return Math.floor(subTotal * 0.05);
+}
+
+const calculateTotal = ({ subTotal, tax })  => {
+    return (subTotal + tax);
 }
 
 const onRowChanged = () => {
