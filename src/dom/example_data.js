@@ -93,5 +93,61 @@ export const exampleData = {
             editable: false
         },
     ],
-    tableData: []
+    table: {
+        data: [],
+        columns: [
+            {
+                name: 'Title',
+                required: true,
+                placeholder: '',
+                data: null,
+                fieldType: String,
+                inputType: 'text'
+            },
+            {
+                name: 'Description',
+                required: true,
+                placeholder: '',
+                data: null,
+                fieldType: String,
+                inputType: 'text'
+            },
+            {
+                name: 'Quantity',
+                required: true,
+                placeholder: '',
+                data: null,
+                fieldType: Number,
+                inputType: 'number'
+            },
+            {
+                name: 'Type',
+                required: true,
+                placeholder: '',
+                data: null,
+                fieldType: Array,
+                inputType: 'radio',
+                values: [
+                    'Part',
+                    'Labour'
+                ]
+            },
+            {
+                name: 'Cost Rate ($/Units)',
+                required: true,
+                placeholder: '',
+                data: null,
+                fieldType: Number,
+                inputType: 'number'
+            },
+            {
+                name: 'Amount',
+                required: true,
+                placeholder: '',
+                data: null,
+                fieldType: Number,
+                inputType: 'number'
+            },
+        ]
+    }
 }

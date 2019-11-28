@@ -1,12 +1,3 @@
-import { components } from './components/textarea';
-
-export const createDescription = ({ description }) => {
-    return components.create.textArea({
-        labelText: 'Description',
-        textContent: description
-    });
-}
-
 export const applyAutoHeight = ({ element }) => {
     // Source: https://mdbootstrap.com/snippets/jquery/piotr-glejzer/131442
     jQuery.fn.extend({

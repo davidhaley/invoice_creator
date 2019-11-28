@@ -2,19 +2,25 @@ import '../public/css/main.css';
 import '../src/styles/responsive_table.less';
 import { dom } from './dom';
 import { createTable } from './dom/table';
-import { createCompanyDetails } from './dom/company_details';
-import { createBillingInfo } from './dom/billing_info';
-import { createCustomerDetails } from './dom/customer_details';
-import { createBillingAmounts } from './dom/billing_amounts';
-import { createDescription, applyAutoHeight } from './dom/description';
+import { applyAutoHeight } from './autoheight_helper';
 import { exampleData } from './dom/example_data';
+import {
+    createCompanyDetails,
+    createBillingInfo,
+    createCustomerDetails,
+    createDescription,
+    createBillingAmounts
+} from './dom/invoice';
 
 const handlers = {
     companyDetails: (data) => createCompanyDetails(data),
     billingInfo: (data) => createBillingInfo(data),
     customerDetails: (data) => createCustomerDetails(data),
     description: (data) => applyAutoHeight({ element: createDescription(data) }),
-    table: (data) => createTable(data),
+    table: (data) => {
+        console.log(data);
+        return createTable(data);
+    },
     billingAmounts: (data) => createBillingAmounts(data)
 }
 

@@ -88,16 +88,16 @@ export const components = {
                 elem: document.createElement('div')
             });
         },
-        headerRow: ({ table, columns }) => {
+        headerRow: ({ tableElem, columns }) => {
             return columns.reduce((table, curr) => {
                 if (table)  {
                     const headerCell = elements.create.headerCell({ name: curr.name });
                     table.appendChild(headerCell);
                     return table;
                 }
-            }, table);
+            }, tableElem);
         },
-        row: ({ table, columns }) => {
+        row: ({ tableElem, columns }) => {
             return columns.reduce((table, curr) => {
                 if (table)  {
                     if (curr.inputType === 'radio') {
@@ -125,7 +125,7 @@ export const components = {
 
                     return table;
                 }
-            }, table);
+            }, tableElem);
         }
     }
 }
