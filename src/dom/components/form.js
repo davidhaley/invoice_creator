@@ -108,10 +108,8 @@ const elements = {
 
 export const components = {
     create: {
-        form: ({ submitButton }) => {
-            const form = document.createElement('form');
-            form.appendChild(submitButton);
-            return form;
+        form: () => {
+            return document.createElement('form');
         },
         headerRow: ({ formElem, columns }) => {
             const formRow = elements.create.formRow();

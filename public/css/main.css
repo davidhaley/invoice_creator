@@ -1,3 +1,25 @@
+/* Page */
+
+html, body {
+    height: 100%;
+    background-color: #EEE;
+}
+
+body {
+    box-sizing: border-box;
+    min-height: 100%;
+    margin: 0 auto;
+    padding: 2em;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 1em;
+    background-color: white;
+    border: double 3px #DDD;
+    border-top: none; border-bottom: none;
+}
+
+h1, h2, h3, h4, h5, h6 { margin-top: 0; }
+
+strong { color: darken(slategrey,20%); }
 
 #title {
     padding-bottom: 12px;
@@ -35,11 +57,12 @@
     margin-left: 4px;
 }
 
+
+/* Form */
+
 .form-group .textarea {
     height: 100%;
 }
-
-input[type="radio"]:checked+label{ font-weight: bold; }
 
 #form-action-buttons .btn-secondary {
     margin: '0 10px 0 0';
@@ -53,19 +76,12 @@ form {
     margin-bottom: 10px;
 }
 
-/* .subtitle-small.company {
-    padding: 10px;
-}
-
-.subtitle-small.customer {
-    margin-left: 4px;
-} */
-
 .control-label {
     text-align: center;
 }
 
-/* Fields */
+
+/* Field */
 
 .fields-container {
     display: flex;

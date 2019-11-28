@@ -13,9 +13,7 @@ export const createDescription = ({ description }) => textAreaComponents.create.
 
 export const createForm = ({ form }) => {
 
-    const formElem = formComponents.create.form({
-        submitButton: buttonComponents.create.buttonSubmit()
-    });
+    const formElem = formComponents.create.form();
 
     formComponents.create.headerRow({ formElem, columns: form.columns });
 
@@ -26,10 +24,7 @@ export const createForm = ({ form }) => {
     actionButtonsContainer.appendChild(
         buttonComponents.create.buttonSecondary({
             name: 'Delete Line-Item',
-            onClick: () => () => deleteRow({
-                formElem,
-                columns: form.columns
-            }),
+            onClick: () => deleteRow({ formElem }),
         })
     );
 
@@ -43,32 +38,16 @@ export const createForm = ({ form }) => {
         })
     );
 
-    formElem.addEventListener('keyup', (e) => {
-        const rowElems = document.querySelectorAll('.form-row');
-        if (rowElems) {
-            const rows = Array.from(rowElems);
+    actionButtonsContainer.appendChild(
+        buttonComponents.create.buttonSubmit()
+    );
 
-            const amounts = aggregateAmounts({ rows });
-            console.log(amounts);
-
-            const subTotal = calculateSubTotal({ amounts });
-            console.log(subTotal);
-            dom.select.subTotal().textContent = `${subTotal}`;
-
-            const tax = calculateTax({ subTotal });
-            dom.select.tax().textContent = `${tax}`;
-            console.log(tax);
-
-            const total = calculateTotal({ subTotal, tax });
-            dom.select.total().textContent = `${total}`;
-            console.log(total);
-
-
-        }
-    });
+    formElem.addEventListener('keyup', (e) => updateMoneyFields());
 
     // Optional: populate with data
     // console.log(getFormRows({ form, startIndex: 1, columnsCount: columns: form.columns.length }));
+
+    updateMoneyFields();
 
     return formElem;
 }
@@ -102,27 +81,51 @@ const calculateTax = ({ subTotal }) => {
 }
 
 const calculateTotal = ({ subTotal, tax })  => {
-    return (subTotal + tax);
+    return (parseInt(subTotal) + tax);
 }
 
-const onRowChanged = () => {
-    // add disabled to delete row if row is 1
+const updateMoneyFields = () => {
+    const rowElems = document.querySelectorAll('.form-row');
+    if (rowElems) {
+        const rows = Array.from(rowElems);
+
+        const amounts = aggregateAmounts({ rows });
+        console.log(amounts);
+
+        const subTotal = calculateSubTotal({ amounts });
+        console.log(subTotal);
+        dom.select.subTotal().textContent = `${subTotal}`;
+
+        const tax = calculateTax({ subTotal });
+        dom.select.tax().textContent = `${tax}`;
+        console.log(tax);
+
+        const total = calculateTotal({ subTotal, tax });
+        dom.select.total().textContent = `${total}`;
+        console.log(total);
+    }
 }
 
 const addRow = ({ formElem, columns }) => formComponents.create.row({ formElem, columns });
 
-const deleteRow = ({ formElem, columns }) => {
-
+const deleteRow = ({ formElem }) => {
+    console.log('hey');
+    const rows = formElem.querySelectorAll('.form-row');
+    console.log(rows);
+    if (rows.length > 1) {
+        rows[rows.length - 1].remove();
+        updateMoneyFields();
+    }
 }
 
-const getFormRows = ({ formElem, columnsCount, startIndex = 1, endIndex }) => {
-    if (startIndex < 1) {
-        startIndex = 1;
-    }
-    if (!endIndex || endIndex > columnsCount) {
-        endIndex = columnsCount;
-    }
-    const cells = dom.select.tableCells(formElem);
-    const start = (startIndex * columnsCount); // cell count per column * rows
-    return [...cells ].slice(start, cells.length);
-}
+// const getFormRows = ({ formElem, columnsCount, startIndex = 1, endIndex }) => {
+//     if (startIndex < 1) {
+//         startIndex = 1;
+//     }
+//     if (!endIndex || endIndex > columnsCount) {
+//         endIndex = columnsCount;
+//     }
+//     const cells = dom.select.tableCells(formElem);
+//     const start = (startIndex * columnsCount); // cell count per column * rows
+//     return [...cells ].slice(start, cells.length);
+// }
