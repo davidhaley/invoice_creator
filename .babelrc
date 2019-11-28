@@ -1,0 +1,58 @@
+{
+    "presets": [
+        [
+            // @babel/preset-env is needed at a minimum.
+            // It enables the required plugins based on
+            // the optional environment definition you pass to it.
+            "@babel/preset-env",
+            {
+                // Given webpack supports ES2015 modules out of
+                // the box, we tell Babel to skip processing
+                // them. Skipping this step would break
+                // webpack's Hot Module Reload mechanism.
+                "modules": false,
+
+                "corejs": 3,
+                "useBuiltIns": "entry",
+                "targets": {
+                    "node": "current",
+                    "edge": "17",
+                    "firefox": "60",
+                    "chrome": "67",
+                    "safari": "11.1",
+                }
+            },
+        ],
+    ],
+    "plugins": [
+        [
+            "@babel/transform-runtime",
+        ],
+    ],
+    "env": {
+        "test": {
+            "presets": [
+                [
+                    "@babel/preset-env",
+                    {
+                        "modules": "commonjs",
+                    }
+                ]
+            ],
+            "plugins": [
+                [
+                    "module-resolver",
+                    {
+                        "root": [
+                            "./src"
+                        ],
+                        "alias": {
+                            "test": "./test",
+                        }
+                    },
+                ],
+                "transform-es2015-modules-commonjs",
+            ],
+        }
+    }
+}
