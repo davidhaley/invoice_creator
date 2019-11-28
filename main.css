@@ -1,0 +1,117 @@
+/* Page */
+
+html, body {
+    height: 100%;
+    background-color: #EEE;
+}
+
+body {
+    box-sizing: border-box;
+    min-height: 100%;
+    margin: 0 auto;
+    padding: 2em;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 1em;
+    background-color: white;
+    border: double 3px #DDD;
+    border-top: none; border-bottom: none;
+}
+
+h1, h2, h3, h4, h5, h6 { margin-top: 0; }
+
+strong { color: darken(slategrey,20%); }
+
+#title {
+    padding-bottom: 12px;
+    text-align: center;
+}
+
+#billing-info,
+#billing-amounts {
+    float: right;
+    margin-right: 64px;
+}
+
+#billing-info .field:first-child,
+#billing-info .field:last-child,
+#billing-amounts .field:first-child,
+#billing-amounts .field:last-child,
+#company-details .field-value,
+#customer-details .field-value {
+    font-weight: bold;
+}
+
+#customer-details {
+    margin-left: 32px;
+}
+
+.title-small  {
+    margin-top: 48px;
+}
+
+.subtitle-small {
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+    padding: 20px 0  0 20px;
+    margin-left: 4px;
+}
+
+
+/* Form */
+
+.form-group .textarea {
+    height: 100%;
+}
+
+#form-action-buttons {
+    float: right;
+}
+
+#form-action-buttons .btn-secondary {
+    margin: '0 10px 0 0';
+}
+
+#form-action-buttons .btn {
+    margin: 4px;
+}
+
+textarea {
+    text-align: center;
+}
+
+form {
+    margin-bottom: 10px;
+}
+
+.control-label {
+    text-align: center;
+}
+
+
+/* Field */
+
+.fields-container {
+    display: flex;
+}
+
+.field {
+    display: flex;
+}
+
+.fields-group {
+    flex-wrap: wrap;
+    margin: 0 0 3em 0;
+    padding: 0;
+}
+
+.field-name {
+    padding-right: 1em;
+}
+
+.field-value {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+/*# sourceMappingURL=main.css.map*/
