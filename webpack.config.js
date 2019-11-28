@@ -80,6 +80,11 @@ const commonConfig = merge([
 ]);
 
 const productionConfig = merge([
+    {
+        output: {
+            publicPath: "/invoice_creator/"
+        }
+    },
     parts.extractCSS({
         use: "css-loader",
     }),
