@@ -1,4 +1,4 @@
-import { dom } from "../../dom";
+import { dom, addClasses } from "../../dom";
 
 const elements = {
     create: {
@@ -151,12 +151,4 @@ const createRadioColumns = ({ columnData }) => {
         }
         return prev;
     }, []);
-}
-
-
-const addClasses = ({ classes, elem }) => {
-    for (const className of classes)  {
-        elem.classList.add(className);
-    }
-    return elem;
 }

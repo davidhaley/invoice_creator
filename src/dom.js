@@ -87,3 +87,10 @@ export const dom = {
         }
     }
 }
+
+export const addClasses = ({ classes, elem }) => {
+    for (const className of classes)  {
+        elem.classList.add(className);
+    }
+    return elem;
+}

@@ -74,10 +74,3 @@ const getTableRows = ({ tableElem, columnsCount, startIndex = 1, endIndex }) => 
     const start = (startIndex * columnsCount); // cell count per column * rows
     return [...cells ].slice(start, cells.length);
 }
-
-const addClasses = ({ classes, elem }) => {
-    for (const className of classes)  {
-        elem.classList.add(className);
-    }
-    return elem;
-}

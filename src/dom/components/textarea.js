@@ -1,5 +1,4 @@
-import { dom } from "../../dom";
-import { exampleData } from "../example_data";
+import { dom, addClasses } from "../../dom";
 
 const elements = {
     create: {
@@ -38,12 +37,4 @@ export const components = {
             return formGroup;
         },
     }
-}
-
-
-const addClasses = ({ classes, elem }) => {
-    for (const className of classes)  {
-        elem.classList.add(className);
-    }
-    return elem;
 }

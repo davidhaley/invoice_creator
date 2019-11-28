@@ -1,4 +1,4 @@
-import { dom } from "../../dom";
+import { dom, addClasses } from "../../dom";
 
 const elements = {
     create: {
@@ -34,11 +34,4 @@ export const components = {
         }),
         buttonGroup: () => elements.create.buttonGroup()
     }
-}
-
-const addClasses = ({ classes, elem }) => {
-    for (const className of classes)  {
-        elem.classList.add(className);
-    }
-    return elem;
 }
