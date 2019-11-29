@@ -1,6 +1,5 @@
-export const wrapWithProgressBar = ({ element }) => {
+export const wrapWithProgressBar = ({ element, maxlength }) => {
 
-    const maxLength = 100;
     let progressAmount = 0;
     let width = 0;
 
@@ -15,8 +14,8 @@ export const wrapWithProgressBar = ({ element }) => {
     progressBar.classList.add('progressbar');
     progressBar.setAttribute('aria-valuenow', '0');
     progressBar.setAttribute('aria-valuemin', '0');
-    progressBar.setAttribute('aria-valuemax', maxLength.toString());
-    progressBar.textContent = `${(maxLength).toString()} chars remaining`;
+    progressBar.setAttribute('aria-valuemax', maxlength.toString());
+    progressBar.textContent = `${(maxlength).toString()} chars remaining`;
     progressBar.style.backgroundColor = '#007bff';
     progressBar.style.color = 'white';
     progressBar.style.paddingLeft = '12px';
@@ -26,13 +25,13 @@ export const wrapWithProgressBar = ({ element }) => {
 
     const textArea = element.querySelector('textarea');
     if (textArea) {
-        textArea.setAttribute('maxlength', maxLength);
+        textArea.setAttribute('maxlength', maxlength);
     }
 
     const onInput = () => {
         if (textArea) {
             let length = textArea.value.length;
-            const remaining = maxLength-length;
+            const remaining = maxlength-length;
 
             progressBar.textContent = `${length.toString()}`;
             progressBar.setAttribute('aria-valuenow', remaining.toString());
@@ -42,13 +41,14 @@ export const wrapWithProgressBar = ({ element }) => {
             progressAmount = Math.floor(remaining);
             progressBar.classList.replace(`w-${lastProgress}`, `w-${progressAmount}`);
 
-            width = progressAmount
+            width = (((progressAmount * 100)) / maxlength);
             progressBar.style.width = `${width}%`;
         }
     }
     onInput();
 
     element.addEventListener('keyup', onInput);
+    element.addEventListener('keydown', onInput);
 
     return element;
 }

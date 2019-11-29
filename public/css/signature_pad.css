@@ -23,6 +23,11 @@ body {
     height: 100%;
 }
 
+#signature p {
+    background-color: lightgray;
+    text-align: center;
+}
+
 #signature-name p {
     font-weight: bold;
     border-bottom: 1px solid black;

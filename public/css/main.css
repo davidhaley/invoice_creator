@@ -40,6 +40,10 @@ strong { color: darken(slategrey,20%); }
     margin-left: 32px;
 }
 
+#terms {
+    font-size: 0.9em;
+}
+
 .title-small  {
     margin-top: 48px;
 }

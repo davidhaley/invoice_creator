@@ -80,19 +80,19 @@ export const exampleData = {
     billingAmounts: [
         {
             name: 'Sub Total',
-            value: 'Value',
+            value: '$0.00',
             editable: false,
             id: 'sub-total'
         },
         {
             name: 'Tax',
-            value: 'Value',
+            value: '$0.00',
             editable: false,
             id: 'tax'
         },
         {
-            name: 'Total',
-            value: 'Value',
+            name: 'Total (CAD)',
+            value: '$0.00',
             editable: false,
             id: 'total'
         },
@@ -119,28 +119,28 @@ export const exampleData = {
             {
                 name: 'Quantity',
                 required: true,
-                placeholder: '',
+                placeholder: '0',
                 data: null,
                 inputType: 'number',
                 field: 'quantity',
-                step: '0'
+                step: '0',
             },
             {
                 name: 'Cost (Per Unit)',
                 required: true,
-                placeholder: '',
+                placeholder: '$0.00',
                 data: null,
                 inputType: 'number',
                 field: 'cost',
-                step: '0.01' // 2 Decimals
+                step: '0.01', // 2 Decimals
             },
             {
                 name: 'Amount',
                 required: true,
-                placeholder: '',
+                placeholder: '$0.00',
                 data: null,
                 field: 'amount',
-                step: '0.01' // 2 Decimals
+                step: '0.01', // 2 Decimals
             },
         ]
     }

@@ -1,4 +1,5 @@
 import { dom, addClasses } from "../../dom";
+import { formConfig } from "../../form_config";
 
 const elements = {
     create: {
@@ -8,8 +9,8 @@ const elements = {
                 elem: document.createElement('textarea')
             });
             elem.setAttribute('rows', '1');
-            elem.style.minHeight = '100px';
-            elem.style.maxHeight = '100px';
+            elem.style.minHeight = formConfig.invoiceDescription.minHeight;
+            elem.style.maxHeight = formConfig.invoiceDescription.maxHeight;
             elem.textContent = textContent || '';
 
             return elem;
