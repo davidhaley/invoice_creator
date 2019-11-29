@@ -50,19 +50,23 @@ const commonConfig = merge([
                     },
                     {
                         module: 'bootstrap',
-                        entry: 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
+                        entry: 'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css',
+                    },
+                    {
+                        module: 'bootstrap',
+                        entry: 'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js',
                     },
                     {
                         module: 'popper',
                         entry: 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js',
                     },
                     {
-                        module: 'bootstrapValidate',
-                        entry: 'https://cdn.rawgit.com/PascaleBeier/bootstrap-validate/v2.2.0/dist/bootstrap-validate.js'
-                    },
-                    {
                         module: 'currency',
                         entry: 'https://unpkg.com/currency.js/dist/currency.min.js'
+                    },
+                    {
+                        module: '_',
+                        entry: 'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js'
                     }
                 ],
             }),
@@ -80,6 +84,14 @@ const commonConfig = merge([
 ]);
 
 const productionConfig = merge([
+    {
+        contentBase: [
+            path.join(__dirname, 'dist'),
+        ],
+        output: {
+            publicPath: "/invoice_creator/"
+        }
+    },
     parts.extractCSS({
         use: "css-loader",
     }),

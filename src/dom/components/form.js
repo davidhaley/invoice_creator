@@ -39,7 +39,7 @@ const elements = {
 
             return elem;
         },
-        input: ({ id, placeholderText, inputType, name, step }) => {
+        input: ({ id, placeholderText, inputType, name, step, value }) => {
             const input = addClasses({
                 classes: dom.styles.form.input,
                 elem: document.createElement('input')
@@ -49,10 +49,10 @@ const elements = {
             input.type = inputType;
             input.name = name;
             input.step = step;
-            input.value = "0";
 
             if (name === 'amount') {
                 input.setAttribute('readonly', true);
+                input.disabled = true;
             }
 
             return input;
@@ -140,11 +140,12 @@ export const components = {
                         });
                     } else {
                         input = elements.create.input({
-                            id: curr.id,
                             placeholderText: curr.placeholder,
                             inputType: curr.inputType,
+                            id: curr.field,
                             name: curr.field,
-                            step: curr.step
+                            step: curr.step,
+                            value: curr.value
                         });
                     }
 
@@ -185,7 +186,8 @@ export const components = {
                             placeholderText: curr.placeholder,
                             inputType: curr.inputType,
                             name: curr.field,
-                            step: curr.step
+                            step: curr.step,
+                            value: curr.value
                         });
                     }
 

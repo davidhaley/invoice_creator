@@ -8,49 +8,50 @@ export const createBillingAmounts = ({ billingAmounts }) => fieldComponents.crea
 export const createBillingInfo = ({ billingInfo }) => fieldComponents.create.fieldGroup({ fields: billingInfo });
 export const createCompanyDetails = ({ companyDetails }) => fieldComponents.create.fieldGroup({ fields: companyDetails });
 export const createCustomerDetails = ({ customerDetails }) => fieldComponents.create.fieldGroup({ fields: customerDetails });
-export const createDescription = ({ description }) => textAreaComponents.create.textArea({ labelText: 'Description', textContent: description });
+export const createDescription = ({ description }) => textAreaComponents.create.textArea({ labelText: 'Invoice Description', textContent: description });
 
 export const createForm = ({ form }) => {
 
     const formElem = formComponents.create.form();
-
     formComponents.create.headerRow({ formElem, columns: form.columns });
 
+    formElem.addEventListener('keyup', (e) => updateMoneyFields());
+    formElem.addEventListener('keydown', (e) => {
+        if (e.key === "Tab") {
+            if (e.srcElement.name === "cost") {
+                // TODO: and no next row, or next row and it's not empty
+                formComponents.create.row({ formElem, columns: form.columns });
+            }
+        }
+    });
 
+
+
+    const buttonsGroupForRowActions = createButtonsGroupForRowActions({
+        addRowFn: () => addRow({ formElem, columns: form.columns }),
+        deleteRowFn: () => deleteRow({ formElem })
+    });
+
+    dom.select.actionButtons().appendChild(buttonsGroupForRowActions);
+
+    return formElem;
+}
+
+const createButtonsGroupForRowActions = ({ addRowFn, deleteRowFn }) => {
     const rowActionsButtonsGroup = buttonComponents.create.buttonGroup();
-    const submitButtonGroup = buttonComponents.create.buttonGroup();
-
     rowActionsButtonsGroup.appendChild(
         buttonComponents.create.buttonSecondary({
             name: 'Delete Line-Item',
-            onClick: () => deleteRow({ formElem }),
+            onClick: deleteRowFn,
         })
     );
-
     rowActionsButtonsGroup.appendChild(
         buttonComponents.create.buttonPrimary({
             name: 'Add Line-Item',
-            onClick: () => addRow({
-                formElem,
-                columns: form.columns
-            }),
+            onClick: addRowFn,
         })
     );
-
-    submitButtonGroup.appendChild(
-        buttonComponents.create.buttonSubmit()
-    );
-
-    const actionButtonsContainer = dom.select.actionButtons();
-    actionButtonsContainer.appendChild(rowActionsButtonsGroup);
-    actionButtonsContainer.appendChild(submitButtonGroup);
-
-    formElem.addEventListener('keyup', (e) => updateMoneyFields());
-
-    // Optional: populate with data
-    // console.log(getFormRows({ form, startIndex: 1, columnsCount: columns: form.columns.length }));
-
-    return formElem;
+    return rowActionsButtonsGroup;
 }
 
 const aggregateAmounts = ({ rows = [] }) => {
@@ -66,7 +67,7 @@ const aggregateAmounts = ({ rows = [] }) => {
             `)
 
             if (cost && quantity && amountElem) {
-                amountElem.value = currency(cost).multiply(quantity);
+                amountElem.value = `$${currency(cost).multiply(quantity)}`;
                 prev.push(cost.multiply(quantity));
             }
         }
@@ -95,19 +96,19 @@ const updateMoneyFields = () => {
         const rows = Array.from(rowElems);
 
         const amounts = aggregateAmounts({ rows });
-        console.log(amounts);
+        // console.log(amounts);
         if (amounts.length > 0) {
             const subTotal = calculateSubTotal({ amounts });
-            console.log(subTotal);
-            dom.select.subTotal().textContent = `${subTotal}`;
+            // console.log(subTotal);
+            dom.select.subTotal().textContent = `$${subTotal}`;
 
             const tax = calculateTax({ subTotal });
-            dom.select.tax().textContent = `${tax}`;
-            console.log(tax);
+            dom.select.tax().textContent = `$${tax}`;
+            // console.log(tax);
 
             const total = calculateTotal({ subTotal, tax });
-            dom.select.total().textContent = `${total}`;
-            console.log(total);
+            dom.select.total().textContent = `$${total}`;
+            // console.log(total);
         }
     }
 }
@@ -126,15 +127,3 @@ const deleteRow = ({ formElem }) => {
         updateMoneyFields();
     }
 }
-
-// const getFormRows = ({ formElem, columnsCount, startIndex = 1, endIndex }) => {
-//     if (startIndex < 1) {
-//         startIndex = 1;
-//     }
-//     if (!endIndex || endIndex > columnsCount) {
-//         endIndex = columnsCount;
-//     }
-//     const cells = dom.select.tableCells(formElem);
-//     const start = (startIndex * columnsCount); // cell count per column * rows
-//     return [...cells ].slice(start, cells.length);
-// }

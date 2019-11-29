@@ -1,0 +1,72 @@
+/* Source: https://codepen.io/kunukn/pen/kkbNvx */
+
+*,
+:before,
+:after {
+    box-sizing: border-box;
+}
+
+html {
+    font: 18px 'Helvetica Neue', sans-serif;
+}
+
+body {
+    text-align: center;
+}
+
+#signature-container {
+    width: 100%;
+}
+
+#signature {
+    font-weight: bold;
+    height: 100%;
+}
+
+#signature p {
+    background-color: lightgray;
+    text-align: center;
+}
+
+#signature-name p {
+    font-weight: bold;
+    border-bottom: 1px solid black;
+    padding-bottom: 14px;
+    width: 100%;
+    text-align: left;
+}
+
+.signature-component {
+    background:url('../images/paperfibers.png');
+    text-align: left;
+    display: inline-block;
+    max-width: 100%;
+    h1 {
+        margin-bottom: 0;
+    }
+    h2 {
+        margin: 0;
+        font-size: 100%;
+    }
+    /* button {
+        padding: 1em;
+        background: transparent;
+        box-shadow: 2px 2px 4px #777;
+        margin-top: 0.5em;
+        border: 1px solid #777;
+        font-size: 1rem;
+        &.toggle {
+            background: rgba(red, 0.2);
+        }
+    } */
+    canvas {
+        display: block;
+        position: relative;
+        border: 1px solid;
+    }
+    img {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+}

@@ -1,10 +1,5 @@
 /* Page */
 
-html, body {
-    height: 100%;
-    background-color: #EEE;
-}
-
 body {
     box-sizing: border-box;
     min-height: 100%;
@@ -45,6 +40,10 @@ strong { color: darken(slategrey,20%); }
     margin-left: 32px;
 }
 
+#terms {
+    font-size: 0.9em;
+}
+
 .title-small  {
     margin-top: 48px;
 }
@@ -76,9 +75,9 @@ strong { color: darken(slategrey,20%); }
     margin: 4px;
 }
 
-textarea {
-    text-align: center;
-}
+/* textarea {
+    text-align: left;
+} */
 
 form {
     margin-bottom: 10px;
