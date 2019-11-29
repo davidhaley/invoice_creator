@@ -5,7 +5,7 @@ const elements = {
     create: {
         headerField: ({ name }) => {
             const elem = addClasses({
-                classes: dom.styles.form.headerCell,
+                classes: dom.styles.form.header,
                 elem: document.createElement('div')
             });
             elem.textContent = name;
@@ -57,20 +57,36 @@ const elements = {
 
             return input;
         },
-        label: ({ name, id }) => {
+        label: ({ name, id, classes }) => {
             // const elem = document.createElement('label');
             // elem.setAttribute('for', radioOptionName);
             // elem.textContent = radioOptionName;
 
             // return elem;
+        //     <div class="input-group-prepend">
+        //     <span class="input-group-text" id="basic-addon1">@</span>
+        //   </div>
 
             const label = addClasses({
-                classes: dom.styles.form.label,
+                classes: [
+                    ...dom.styles.form.label,
+                    ...classes
+                ],
                 elem: document.createElement('label')
             });
             label.id = id;
             label.for = id;
-            label.textContent = name;
+
+            const labelText = addClasses({
+                classes: [
+                    ...dom.styles.form.labelText,
+                    ...classes
+                ],
+                elem: document.createElement('div')
+            });
+            labelText.textContent = name;
+
+            label.appendChild(labelText);
 
             return label;
         },
@@ -92,13 +108,14 @@ const elements = {
                 elem: document.createElement('div')
             });
         },
-        textArea: ({ rows, placeholder }) => {
+        textArea: ({ rows, placeholder, name }) => {
             const elem = addClasses({
                 classes: dom.styles.form.textArea,
                 elem: document.createElement('textarea')
             });
             elem.rows = rows;
             elem.placeholder = placeholder;
+            elem.name = name;
 
             return elem;
         },
@@ -115,7 +132,7 @@ export const components = {
         form: () => {
             return document.createElement('form');
         },
-        headerRow: ({ formElem, columns }) => {
+        headerRow: ({ formElem, columns, isHeader = false }) => {
             const formRow = elements.create.formRow();
             formElem.append(formRow);
             return columns.reduce((row, curr) => {
@@ -124,18 +141,71 @@ export const components = {
                     const column = elements.create.column({
                         classes: curr.name === 'Description' ? dom.styles.form.col2 : dom.styles.form.col1
                     });
-                    const label = elements.create.label({
-                        name: curr.name,
-                        id: curr.id,
+
+                    let label;
+                    if (isHeader) {
+                        label = elements.create.label({
+                            name: curr.name,
+                            id: curr.id,
+                            classes: []
+                        });
+                    } else {
+                        label = elements.create.label({
+                            name: curr.name,
+                            id: curr.id,
+                            classes: ['hide']
+                        });
+                    }
+
+                    const inputGroup = addClasses({
+                        classes: [
+                            ...dom.styles.form.inputGroup,
+                            ...dom.styles.form.inputGroupPrepend
+                        ],
+                        elem: elements.create.inputGroup()
                     });
-                    const inputGroup = elements.create.inputGroup();
+                    const prependTextGroup = addClasses({
+                        classes: dom.styles.form.inputGroupPrependTextGroup,
+                        elem: document.createElement('div')
+                    });
+                    prependTextGroup.style.minWidth = '43%';
+                    // prependTextGroup.classList.add('col-auto');
+
+                    const prependText = addClasses({
+                        classes: dom.styles.form.inputGroupPrependText,
+                        elem: document.createElement('div')
+                    });
+                    prependText.textContent = curr.name;
+
+                    prependTextGroup.appendChild(prependText);
+                    inputGroup.appendChild(prependTextGroup);
+
+                    // let elem = addClasses({
+                    //     classes: dom.styles.form.inputGroup,
+                    //     elem: document.createElement('div')
+                    // });
+                    // if (isPrepend) {
+                    //     elem = addClasses({
+                    //         classes: dom.styles.form.inputGroup,
+                    //         elem: elem
+                    //     });
+                    //     const prependText = addClasses({
+                    //         classes: dom.styles.form.inputGroupPrependText,
+                    //         elem: document.createElement('div')
+                    //     });
+                    //     prependText.textContent = 'test';
+                    //     elem.appendChild(prependText);
+                    // }
+                    // return elem;
+
 
                     let input;
                     if (curr.inputType === 'text') {
                         input = applyAutoHeight({
                             element: elements.create.textArea({
                                 rows: '1',
-                                placeholder: curr.placeholder
+                                placeholder: curr.placeholder,
+                                name: curr.field
                             })
                         });
                     } else {
@@ -177,7 +247,8 @@ export const components = {
                         input = applyAutoHeight({
                             element: elements.create.textArea({
                                 rows: '1',
-                                placeholder: curr.placeholder
+                                placeholder: curr.placeholder,
+                                name: curr.field
                             })
                         });
                     } else {

@@ -7,6 +7,11 @@ export const dom = {
         form: () => document.querySelector('#responsive-form'),
         description: () => document.querySelector(`#description`),
         actionButtons: () => document.querySelector(`#form-action-buttons`),
+        shareInvoiceButton: () => document.getElementById('share-invoice-button'),
+        submitButtonCol: () => document.getElementById('submit-button-col'),
+        signaturePad: () => document.getElementById('signature-pad'),
+        signatureButtonText: () => document.getElementById('signature-button-text'),
+        signatureButton: () => document.getElementById('signature-button'),
         subTotal: () => document.querySelector(`#sub-total`),
         tax: () => document.querySelector(`#tax`),
         total: () => document.querySelector(`#total`),
@@ -31,33 +36,66 @@ export const dom = {
         },
         form: {
             header: [
-
+                'form-field',
+                'sr-only'
             ],
             formRow: [
                 'form-row',
-                'align-items-center'
+                'align-items-center',
+                // 'mt-5'
             ],
             col1: [
                 'col-sm-12',
                 'col-md-2',
                 'col-lg-2',
                 'col-xl-2',
-                'text-center'
+                'text-center',
+
+                // 'd-none',
+                // 'd-md-flex'
             ],
             col2: [
                 'col-sm-12',
                 'col-md-3',
                 'col-lg-3',
                 'col-xl-4',
-                'text-center'
+                'text-center',
+
+                // 'd-none',
+                // 'd-md-flex'
+            ],
+            colHidden: [
+                'col-hidden',
+                'd-md-flex'
             ],
             input: [
                 'form-control',
-                'text-center'
+                'text-center',
+                // 'col-sm-9'
             ],
             inputGroup: [
                 'input-group',
                 'mb-2'
+            ],
+            inputGroupPrepend: [
+                'input-group-prepend',
+                // 'd-none',
+                // 'd-md-flex'
+                // 'd-md-none',
+                // 'd-lg-none',
+                // 'd-xl-none'
+            ],
+            inputGroupPrependTextGroup: [
+                'input-group-text',
+                // 'col-sm-9',
+
+                // visible-sm and down  (or hidden-md and up)
+                'd-md-none',
+                'd-lg-none',
+                'd-xl-none'
+            ],
+            inputGroupPrependText: [
+                'input-group-prepend-text'
             ],
             textArea: [
                 'form-control'
@@ -70,11 +108,22 @@ export const dom = {
                 'btn',
                 'btn-secondary'
             ],
+            buttonSuccess: [
+                'btn',
+                'btn-success'
+            ],
             buttonGroup: [
                 'btn-group'
             ],
             label: [
-                'control-label'
+                'control-label',
+
+                // visible-md and up (hidden-sm and down)
+                'd-none',
+                'd-md-flex'
+            ],
+            labelText: [
+                'label-text'
             ]
         },
         textArea: {

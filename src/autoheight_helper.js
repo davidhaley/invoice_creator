@@ -6,7 +6,6 @@ export const applyAutoHeight = ({ element }) => {
     jQuery.fn.extend({
         autoHeight: function() {
             function autoHeight_(element) {
-                console.log(3);
                 return jQuery(element).css({
                     'height': 'auto',
                     // 'overflow-y': 'hidden',
@@ -19,14 +18,11 @@ export const applyAutoHeight = ({ element }) => {
             });
         },
     });
-    console.log(element.tagName)
 
 
     if (element.tagName === 'TEXTAREA') {
-        console.log(1);
         $(element).autoHeight();
     } else {
-        console.log(2);
         $(element.querySelector('textarea')).autoHeight();
     }
     // element.style.height = '100%';

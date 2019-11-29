@@ -3,6 +3,7 @@ import { components as fieldComponents } from './components/fields';
 import { components as textAreaComponents } from './components/textarea';
 import { components as formComponents } from "./components/form";
 import { components as buttonComponents } from "./components/button";
+import { SignaturePad } from './components/signature_pad';
 
 export const createBillingAmounts = ({ billingAmounts }) => fieldComponents.create.fieldGroup({ fields: billingAmounts });
 export const createBillingInfo = ({ billingInfo }) => fieldComponents.create.fieldGroup({ fields: billingInfo });
@@ -13,45 +14,187 @@ export const createDescription = ({ description }) => textAreaComponents.create.
 export const createForm = ({ form }) => {
 
     const formElem = formComponents.create.form();
-    formComponents.create.headerRow({ formElem, columns: form.columns });
+    formComponents.create.headerRow({ formElem, columns: form.columns, isHeader: true });
 
     formElem.addEventListener('keyup', (e) => updateMoneyFields());
     formElem.addEventListener('keydown', (e) => {
-        if (e.key === "Tab") {
-            if (e.srcElement.name === "cost") {
-                // TODO: and no next row, or next row and it's not empty
-                formComponents.create.row({ formElem, columns: form.columns });
+
+        const currentElement = e.srcElement;
+        const lastRow = getLastRowElement({ formElem });
+        const lastRowFocused = isFocusingLastRow({ lastRow, currentElement });
+        const lastRowHasAmount = lastRowHasMoneyAmount({ lastRow });
+
+        if (e.key === "Tab"){
+            if (!e.shiftKey) {
+                if ((e.srcElement.name === "cost")) {
+                    if (lastRowFocused) {
+                        if (lastRowHasAmount) {
+                            addRow({ formElem, columns: form.columns, isHeader: false });
+                        } else {
+                            e.preventDefault();
+                        }
+                    }
+                }
+            } else {
+                if (e.srcElement.name === "title") {
+                    if (lastRowFocused && !lastRowHasAmount) {
+                        deleteRow({ formElem });
+                    }
+                }
             }
         }
     });
 
+    const signatureContainer = document.getElementById('signature-pad-col');
+    createSignaturePad({ containerElem: signatureContainer });
+
+    dom.select.actionButtons().appendChild(
+        createButtonsGroupForRowActions({
+            buttons: [
+                buttonComponents.create.buttonPrimary({
+                    name: 'Append New Line-Item',
+                    onClick: () => addRow({ formElem, columns: form.columns, isHeader: false }),
+                }),
+                buttonComponents.create.buttonSecondary({
+                    name: 'Delete Last Line-Item',
+                    onClick:  () => deleteRow({ formElem }),
+                })
+            ]
+        })
+    );
+
+    dom.select.shareInvoiceButton().appendChild(
+        createButtonsGroupForRowActions({
+            buttons: [
+                (() => {
+                    let initial = true;
+                    const button = buttonComponents.create.buttonSuccess({
+                        name: 'Share Invoice',
+                        onClick: function() {
+                            const signaturePad = dom.select.signaturePad();
+                            signaturePad.style.outline = '3px solid rgb(181, 187, 193, 0.5)';
+                            signatureContainer.style.display = 'initial';
+                            const init = signaturePad.getAttribute('data-init');
+                            console.log(initial)
+                            if (!initial) {
+                                // signatureContainer.style.display = 'none';
+                                signaturePad.style.pointerEvents = 'none';
+                                dom.select.signatureButton().disabled = true;
+                            } else {
+                                if (init === null || init === 'true') {
+                                    console.log('initial');
+                                    signatureContainer.style.display = 'initial';
+                                    signaturePad.setAttribute('data-init', 'false');
+                                    initial = false;
+                                }
+                            }
 
 
-    const buttonsGroupForRowActions = createButtonsGroupForRowActions({
-        addRowFn: () => addRow({ formElem, columns: form.columns }),
-        deleteRowFn: () => deleteRow({ formElem })
+                            dom.select.signatureButton().style.display = 'initial';
+                            alert('Invoice Shared!');
+                            this.textContent = 'Return Invoice';
+
+                        },
+                    });
+                    button.style.display = 'none';
+                    return button;
+                })()
+            ]
+        })
+    );
+
+    const submitButtonCol = dom.select.submitButtonCol()
+    const submitButtonContainer = document.getElementById('submit-button');
+    const submitButton = buttonComponents.create.buttonSubmit({
+        text: 'Save',
+        onClick: () => {
+            submitButtonCol.style.display = 'none';
+            // signatureContainer.style.display = 'initial';
+            hideShareInvoiceButton({ hideButton: false });
+            disableRowActionButtons({ disableButtons: true });
+            setFieldsReadOnly({ setReadOnly: true });
+        }
     });
+    submitButtonContainer.appendChild(submitButton);
 
-    dom.select.actionButtons().appendChild(buttonsGroupForRowActions);
 
     return formElem;
 }
 
-const createButtonsGroupForRowActions = ({ addRowFn, deleteRowFn }) => {
-    const rowActionsButtonsGroup = buttonComponents.create.buttonGroup();
-    rowActionsButtonsGroup.appendChild(
-        buttonComponents.create.buttonSecondary({
-            name: 'Delete Line-Item',
-            onClick: deleteRowFn,
-        })
-    );
-    rowActionsButtonsGroup.appendChild(
-        buttonComponents.create.buttonPrimary({
-            name: 'Add Line-Item',
-            onClick: addRowFn,
-        })
-    );
-    return rowActionsButtonsGroup;
+const setFieldsReadOnly = ({ setReadOnly = false }) => {
+    const formControls = Array.from(document.querySelectorAll('.form-control'));
+    formControls.forEach((formControl) => {
+        if (setReadOnly) {
+            formControl.setAttribute('readonly', 'true');
+        } else {
+            formControl.removeAttribute('readonly');
+        }
+    });
+}
+
+const disableRowActionButtons = ({ disableButtons = false }) => {
+    Array.from(dom.select.actionButtons().querySelectorAll('button')).forEach((button) => {
+        button.disabled = disableButtons;
+    });
+}
+
+const hideShareInvoiceButton = ({ hideButton = false }) => {
+    dom.select.shareInvoiceButton().querySelector('button').style.display = hideButton ? 'none' : 'initial';
+}
+
+const createButtonsGroupForRowActions = ({ buttons = [] }) => {
+    return buttons.reduce((buttonGroup, curr) => {
+        if (buttonGroup) {
+            buttonGroup.appendChild(curr);
+        }
+        return buttonGroup;
+    }, buttonComponents.create.buttonGroup())
+}
+
+const createSignaturePad = ({ containerElem }) => {
+
+    containerElem.style.display = 'none';
+    // document.addEventListener('touchmove', function(e) { e.preventDefault(); }, { passive:false });
+    // const canvas = document.getElementById('signature-pad');
+    const canvas = dom.select.signaturePad();
+    // canvas.onwheel = (e) => e.preventDefault();
+    const button = document.getElementById('signature-button');
+    const sigButtonText = dom.select.signatureButtonText();
+    const signaturePad = new SignaturePad(canvas, {
+        backgroundColor: 'rgba(255, 255, 255, 0)',
+        penColor: 'rgb(0, 0, 0)',
+        velocityFilterWeight: .7,
+        minWidth: 0.5,
+        maxWidth: 2.5,
+        throttle: 16, // max x milli seconds on event update, OBS! this introduces lag for event update
+        minPointDistance: 3,
+        onBegin: () => {
+            button.classList.remove('disabled');
+            canvas.style.outline = '2px solid #28a745';
+            canvas.setAttribute('data-init', 'true');
+            sigButtonText.textContent = 'Clear Signature';
+            // dom.select.sa
+            // hideShareInvoiceButton({ hideButton: false });
+        }
+    });
+    button.addEventListener('click', function(e) {
+        signaturePad.clear();
+        // this.disabled = true;
+        // const button = dom.select.signatureButton();
+        // sigButtonText.textContent = 'Sign Here';
+        // button.classList.add('disabled');
+        // canvas.style.outline = '3px solid #1A95FF';
+        // button.style.boxShadow = '0 0 0 0.05rem rgba(23, 162, 184, 0.5)';
+        // button.style.transition = 'color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out';
+        // // hideShareInvoiceButton({ hideButton: true });
+        // disableRowActionButtons({ disableButtons: false });
+        // setFieldsReadOnly({ setReadOnly: false });
+
+        // containerElem.style.display = 'none';
+        // dom.select.submitButtonCol().style.display = 'initial';
+    });
+    // const container = document.getElementById('signature-container');
+    // container.appendChild(clearPadButtonGroup);
 }
 
 const aggregateAmounts = ({ rows = [] }) => {
@@ -61,10 +204,10 @@ const aggregateAmounts = ({ rows = [] }) => {
             const quantity = currency(curr.querySelector(`input[name="quantity"]`).value);
             const amountElem = curr.querySelector(`input[name="amount"]`);
 
-            console.log(`
-            cost: ${cost},
-            quantity: ${quantity},
-            `)
+            // console.log(`
+            // cost: ${cost},
+            // quantity: ${quantity},
+            // `)
 
             if (cost && quantity && amountElem) {
                 amountElem.value = `$${currency(cost).multiply(quantity)}`;
@@ -76,7 +219,7 @@ const aggregateAmounts = ({ rows = [] }) => {
 }
 
 const calculateSubTotal = ({ amounts = [] }) => {
-    console.log(amounts);
+    // console.log(amounts);
     return amounts.reduce((prev, curr) => {
         return currency(prev).add(currency(curr));
     }, 0)
@@ -113,8 +256,20 @@ const updateMoneyFields = () => {
     }
 }
 
-const addRow = ({ formElem, columns }) => {
-    formComponents.create.row({ formElem, columns });
+const lastRowHasMoneyAmount = ({ lastRow }) => {
+    const lastRowAmount = lastRow.querySelector(`.form-control[name="amount"]`);
+    return (currency(lastRowAmount.value).intValue !== 0);
+}
+
+const isFocusingLastRow = ({ lastRow, currentElement }) => lastRow.contains(currentElement);
+
+const getLastRowElement = ({ formElem }) => {
+    const formRows = formElem.getElementsByClassName('form-row');
+    return formRows[formRows.length - 1];
+}
+
+const addRow = ({ formElem, columns, isHeader }) => {
+    formComponents.create.headerRow({ formElem, columns, isHeader });
     updateMoneyFields();
 };
 

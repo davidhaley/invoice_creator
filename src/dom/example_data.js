@@ -126,7 +126,7 @@ export const exampleData = {
                 step: '0',
             },
             {
-                name: 'Cost (Per Unit)',
+                name: 'Cost ($/Unit)',
                 required: true,
                 placeholder: '$0.00',
                 data: null,
@@ -135,7 +135,7 @@ export const exampleData = {
                 step: '0.01', // 2 Decimals
             },
             {
-                name: 'Amount',
+                name: 'Line Amount',
                 required: true,
                 placeholder: '$0.00',
                 data: null,

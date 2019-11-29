@@ -24,7 +24,7 @@ strong { color: darken(slategrey,20%); }
 #billing-info,
 #billing-amounts {
     float: right;
-    margin-right: 64px;
+    /* margin-right: 64px; */
 }
 
 #billing-info .field:first-child,
@@ -85,13 +85,28 @@ form {
 
 .control-label {
     text-align: center;
+    margin: 0 auto;
+}
+
+.input-group-prepend-text,
+.label-text {
+    display: block;
+    margin: 0 auto;
 }
 
 
 /* Field */
 
+.hide {
+    display: none !important;
+}
+
+#amount {
+    background-color: rgb(181, 187, 193, 0.5);
+}
 .fields-container {
     display: flex;
+    /* display: flex; */
 }
 
 .field {
@@ -100,7 +115,7 @@ form {
 
 .fields-group {
     flex-wrap: wrap;
-    margin: 0 0 3em 0;
+    margin: 0 0 1em 0;
     padding: 0;
 }
 

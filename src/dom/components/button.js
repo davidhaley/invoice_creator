@@ -25,18 +25,24 @@ export const components = {
         buttonPrimary: ({ name, onClick }) => elements.create.button({
             name,
             onClick,
-            classes: dom.styles.form.buttonPrimary
+            classes: dom.styles.form.buttonPrimary,
         }),
         buttonSecondary: ({ name, onClick }) => elements.create.button({
             name,
             onClick,
-            classes: dom.styles.form.buttonSecondary
+            classes: dom.styles.form.buttonSecondary,
         }),
-        buttonSubmit: () => {
+        buttonSuccess: ({ name, onClick }) => elements.create.button({
+            name,
+            onClick,
+            classes: dom.styles.form.buttonSuccess,
+        }),
+        buttonSubmit: ({ text, onClick }) => {
             const button = elements.create.button({
-                name: 'Submit Form',
-                onClick: () => null,
-                classes: dom.styles.form.buttonPrimary
+                name: text,
+                onClick,
+                classes: dom.styles.form.buttonPrimary,
+
             })
             button.type = 'submit';
             return button;
