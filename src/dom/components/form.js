@@ -53,6 +53,7 @@ const elements = {
 
             if (name === 'amount') {
                 input.setAttribute('readonly', true);
+                input.disabled = true;
             }
 
             return input;
@@ -140,9 +141,9 @@ export const components = {
                         });
                     } else {
                         input = elements.create.input({
-                            id: curr.id,
                             placeholderText: curr.placeholder,
                             inputType: curr.inputType,
+                            id: curr.field,
                             name: curr.field,
                             step: curr.step
                         });

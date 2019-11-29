@@ -45,7 +45,19 @@ export const createForm = ({ form }) => {
     actionButtonsContainer.appendChild(rowActionsButtonsGroup);
     actionButtonsContainer.appendChild(submitButtonGroup);
 
-    formElem.addEventListener('keyup', (e) => updateMoneyFields());
+    formElem.addEventListener('keyup', (e) => {
+        updateMoneyFields();
+    });
+
+
+    formElem.addEventListener('keydown', (e) => {
+        if (e.keyCode === 9) { // tab
+            if (e.srcElement.name === "cost") {
+                // and no next row, or next row and it's not empty
+                formComponents.create.row({ formElem, columns: form.columns });
+            }
+        }
+    });
 
     // Optional: populate with data
     // console.log(getFormRows({ form, startIndex: 1, columnsCount: columns: form.columns.length }));
@@ -95,19 +107,19 @@ const updateMoneyFields = () => {
         const rows = Array.from(rowElems);
 
         const amounts = aggregateAmounts({ rows });
-        console.log(amounts);
+        // console.log(amounts);
         if (amounts.length > 0) {
             const subTotal = calculateSubTotal({ amounts });
-            console.log(subTotal);
+            // console.log(subTotal);
             dom.select.subTotal().textContent = `${subTotal}`;
 
             const tax = calculateTax({ subTotal });
             dom.select.tax().textContent = `${tax}`;
-            console.log(tax);
+            // console.log(tax);
 
             const total = calculateTotal({ subTotal, tax });
             dom.select.total().textContent = `${total}`;
-            console.log(total);
+            // console.log(total);
         }
     }
 }

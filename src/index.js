@@ -1,6 +1,8 @@
 import '../public/css/main.css';
+import '../public/css/signature_pad.css';
 import { dom } from './dom';
 import { applyAutoHeight } from './autoheight_helper';
+import './dom/components/signature_pad';
 import { exampleData } from './dom/example_data';
 import {
     createCompanyDetails,
@@ -36,17 +38,16 @@ const populateInvoice = ({ data }) => {
 // <label class="sr-only" for="inlineFormInputGroup">Amount</label>
 // <label class="control-label" for="inlineFormInputGroup">Amount</label>
 
-// create class for fields that will be calculated
 // hide rows instead of deleting them (if someone wants to undo a deleted row)
 // save all data in local storage onbeforeunload(),  retrieve and populate on page load
 
 
 populateInvoice({ data: exampleData });
 
-bootstrapValidate(
-    '#cost',
-    'numeric:Please only enter numeric characters!'
-);
+// bootstrapValidate(
+//     '#cost',
+//     'numeric:Please only enter numeric characters!'
+// );
 
 bootstrapValidate(
     '#tax',
@@ -57,8 +58,8 @@ bootstrapValidate(
     '#total',
 );
 
-bootstrapValidate(
-    '#quantity',
-    'integer:Please fill out this input field!',
-    'numeric:Please only enter numeric characters!'
-);
+// bootstrapValidate(
+//     '#quantity',
+//     'integer:Please fill out this input field!',
+//     'numeric:Please only enter numeric characters!'
+// );

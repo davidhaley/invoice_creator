@@ -53,7 +53,8 @@ export const exampleData = {
             editable: false
         }
     ],
-    description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque feugiat tincidunt sagittis. Sed non cursus orci, imperdiet dictum ex. Etiam vel metus ac nulla sollicitudin ullamcorper sed id velit. Duis viverra neque sit amet dolor fermentum auctor.`,
+    description: ``,
+    // description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque feugiat tincidunt sagittis. Sed non cursus orci, imperdiet dictum ex. Etiam vel metus ac nulla sollicitudin ullamcorper sed id velit. Duis viverra neque sit amet dolor fermentum auctor.`,
     billingInfo: [
         {
             name: 'Date',

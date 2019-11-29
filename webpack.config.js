@@ -63,6 +63,10 @@ const commonConfig = merge([
                     {
                         module: 'currency',
                         entry: 'https://unpkg.com/currency.js/dist/currency.min.js'
+                    },
+                    {
+                        module: '_',
+                        entry: 'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js'
                     }
                 ],
             }),
@@ -81,6 +85,9 @@ const commonConfig = merge([
 
 const productionConfig = merge([
     {
+        contentBase: [
+            path.join(__dirname, 'dist'),
+        ],
         output: {
             publicPath: "/invoice_creator/"
         }
