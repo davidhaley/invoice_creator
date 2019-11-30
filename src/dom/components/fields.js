@@ -1,29 +1,5 @@
 import { dom, addClasses } from "../../dom";
 
-const elements = {
-    create: {
-        fieldName: ({ name }) => {
-            const elem = addClasses({
-                classes: dom.styles.fieldGroup.fieldName,
-                elem: document.createElement('div')
-            });
-            elem.textContent = name;
-
-            return elem;
-        },
-        fieldValue: ({ id, value }) => {
-            const elem = addClasses({
-                classes: dom.styles.fieldGroup.fieldValue,
-                elem: document.createElement('div')
-            });
-            elem.id = id;
-            elem.textContent = value;
-
-            return elem;
-        },
-    }
-}
-
 export const components = {
     create: {
         fieldGroup: ({ fields }) => {
@@ -63,5 +39,29 @@ export const components = {
 
             return elem;
         }
+    }
+}
+
+const elements = {
+    create: {
+        fieldName: ({ name }) => {
+            const elem = addClasses({
+                classes: dom.styles.fieldGroup.fieldName,
+                elem: document.createElement('div')
+            });
+            elem.textContent = name;
+
+            return elem;
+        },
+        fieldValue: ({ id, value }) => {
+            const elem = addClasses({
+                classes: dom.styles.fieldGroup.fieldValue,
+                elem: document.createElement('div')
+            });
+            elem.id = id;
+            elem.textContent = value;
+
+            return elem;
+        },
     }
 }

@@ -58,22 +58,22 @@ const handleKeyDown = ({ e, formElem, formColumns }) => {
     const lastRow = getLastRowElement({ formElem });
     const lastRowFocused = isFocusingLastRow({ lastRow, currentElement: e.srcElement });
 
-    if (e.key !== "Tab" || !lastRowFocused) return;
+    if (e.key === "Tab" && lastRowFocused) {
+        const lastRowHasAmount = lastRowHasMoneyAmount({ lastRow });
+        const tabbedInLastCellOfLastRow = (!e.shiftKey && (e.srcElement.name === 'cost'));
+        const shiftTabbedInFirstCellOfLastRow = (e.shiftKey && (e.srcElement.name === 'title'));
 
-    const lastRowHasAmount = lastRowHasMoneyAmount({ lastRow });
-    const tabbedInLastCellOfLastRow = (!e.shiftKey && (e.srcElement.name === 'cost'));
-    const shiftTabbedInFirstCellOfLastRow = (e.shiftKey && (e.srcElement.name === 'title'));
-
-    if (tabbedInLastCellOfLastRow) {
-        if (lastRowHasAmount) {
-            formComponents.create.row({ formElem, columns: formColumns, isHeader: false });
+        if (tabbedInLastCellOfLastRow) {
+            if (lastRowHasAmount) {
+                formComponents.create.row({ formElem, columns: formColumns, isHeader: false });
+                updateMoneyFields();
+            } else {
+                e.preventDefault();
+            }
+        } else if (shiftTabbedInFirstCellOfLastRow && !lastRowHasAmount) {
+            deleteRow({ formElem });
             updateMoneyFields();
-        } else {
-            e.preventDefault();
         }
-    } else if (shiftTabbedInFirstCellOfLastRow && !lastRowHasAmount) {
-        deleteRow({ formElem });
-        updateMoneyFields();
     }
 }
 

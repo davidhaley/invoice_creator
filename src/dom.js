@@ -126,27 +126,22 @@ export const dom = {
             formRow: [
                 'form-row',
                 'align-items-center',
-                // 'mt-5'
             ],
-            col1: [
+            col: [
                 'col-sm-12',
                 'col-md-2',
                 'col-lg-2',
                 'col-xl-2',
                 'text-center',
 
-                // 'd-none',
-                // 'd-md-flex'
             ],
-            col2: [
+            colWide: [
                 'col-sm-12',
                 'col-md-3',
                 'col-lg-3',
                 'col-xl-4',
                 'text-center',
 
-                // 'd-none',
-                // 'd-md-flex'
             ],
             colHidden: [
                 'col-hidden',
@@ -155,7 +150,6 @@ export const dom = {
             input: [
                 'form-control',
                 'text-center',
-                // 'col-sm-9'
             ],
             inputGroup: [
                 'input-group',
@@ -163,15 +157,9 @@ export const dom = {
             ],
             inputGroupPrepend: [
                 'input-group-prepend',
-                // 'd-none',
-                // 'd-md-flex'
-                // 'd-md-none',
-                // 'd-lg-none',
-                // 'd-xl-none'
             ],
             inputGroupPrependTextGroup: [
                 'input-group-text',
-                // 'col-sm-9',
 
                 // visible-sm and down  (or hidden-md and up)
                 'd-md-none',
