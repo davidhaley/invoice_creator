@@ -71,29 +71,36 @@ export const createForm = ({ form }) => {
                     const button = buttonComponents.create.buttonSuccess({
                         name: 'Share Invoice',
                         onClick: function() {
-                            const signaturePad = dom.select.signaturePad();
-                            signaturePad.style.outline = '3px solid rgb(181, 187, 193, 0.5)';
-                            signatureContainer.style.display = 'initial';
-                            const init = signaturePad.getAttribute('data-init');
-                            console.log(initial)
-                            if (!initial) {
-                                // signatureContainer.style.display = 'none';
-                                signaturePad.style.pointerEvents = 'none';
-                                dom.select.signatureButton().disabled = true;
+
+                            const signatureButtonText = dom.select.signatureButtonText();
+                            const notSigned = (this.textContent === 'Return Invoice' && signatureButtonText.textContent === 'Sign Here');
+                            if (notSigned) {
+                                alert('You must sign the invoice before you can return it!');
                             } else {
-                                if (init === null || init === 'true') {
-                                    console.log('initial');
-                                    signatureContainer.style.display = 'initial';
-                                    signaturePad.setAttribute('data-init', 'false');
-                                    initial = false;
+                                const signaturePad = dom.select.signaturePad();
+                                signaturePad.style.outline = '3px solid rgb(181, 187, 193, 0.5)';
+                                signatureContainer.style.display = 'initial';
+                                const init = signaturePad.getAttribute('data-init');
+                                console.log(initial)
+                                if (!initial) {
+                                    // signatureContainer.style.display = 'none';
+                                    signaturePad.style.pointerEvents = 'none';
+                                    dom.select.signatureButton().disabled = true;
+                                } else {
+                                    if (init === null || init === 'true') {
+                                        console.log('initial');
+                                        signatureContainer.style.display = 'initial';
+                                        signaturePad.setAttribute('data-init', 'false');
+                                        initial = false;
+                                    }
                                 }
+
+
+                                dom.select.signatureButton().style.display = 'initial';
+                                alert('Invoice Shared!');
+                                this.textContent = 'Return Invoice';
+                                window.scrollTo(0,document.body.scrollHeight);
                             }
-
-
-                            dom.select.signatureButton().style.display = 'initial';
-                            alert('Invoice Shared!');
-                            this.textContent = 'Return Invoice';
-
                         },
                     });
                     button.style.display = 'none';
@@ -113,6 +120,7 @@ export const createForm = ({ form }) => {
             hideShareInvoiceButton({ hideButton: false });
             disableRowActionButtons({ disableButtons: true });
             setFieldsReadOnly({ setReadOnly: true });
+            window.scrollTo(0,document.body.scrollHeight);
         }
     });
     submitButtonContainer.appendChild(submitButton);
@@ -181,7 +189,7 @@ const createSignaturePad = ({ containerElem }) => {
         signaturePad.clear();
         // this.disabled = true;
         // const button = dom.select.signatureButton();
-        // sigButtonText.textContent = 'Sign Here';
+        sigButtonText.textContent = 'Sign Here';
         // button.classList.add('disabled');
         // canvas.style.outline = '3px solid #1A95FF';
         // button.style.boxShadow = '0 0 0 0.05rem rgba(23, 162, 184, 0.5)';
