@@ -1,7 +1,7 @@
 import { dom, addClasses } from "../../dom";
 import { applyAutoHeight } from "../../autoheight_helper";
 
-const elements = {
+export const elements = {
     create: {
         headerField: ({ name }) => {
             const elem = addClasses({
@@ -17,11 +17,6 @@ const elements = {
                 elem: document.createElement('div')
             });
 
-            // const row = addClasses({
-            //     classes: dom.styles.form.bootStrapRow,
-            //     elem: document.createElement('div')
-            // });
-
             const formGroup = addClasses({
                 classes: dom.styles.form.formGroup,
                 elem: document.createElement('div')
@@ -34,21 +29,23 @@ const elements = {
 
             form.appendChild(input);
             formGroup.appendChild(form);
-            // row.appendChild(formGroup);
             elem.appendChild(formGroup);
 
             return elem;
         },
-        input: ({ id, placeholderText, inputType, name, step, value }) => {
+        input: ({ placeholder, type, name, step, value }) => {
+
             const input = addClasses({
                 classes: dom.styles.form.input,
                 elem: document.createElement('input')
             });
-            input.id = id;
-            input.placeholder = placeholderText;
-            input.type = inputType;
+            input.placeholder = placeholder;
+            input.type = type;
             input.name = name;
             input.step = step;
+            if (value) {
+                input.value = value;
+            }
 
             if (name === 'amount') {
                 input.setAttribute('readonly', true);
@@ -58,15 +55,6 @@ const elements = {
             return input;
         },
         label: ({ name, id, classes }) => {
-            // const elem = document.createElement('label');
-            // elem.setAttribute('for', radioOptionName);
-            // elem.textContent = radioOptionName;
-
-            // return elem;
-        //     <div class="input-group-prepend">
-        //     <span class="input-group-text" id="basic-addon1">@</span>
-        //   </div>
-
             const label = addClasses({
                 classes: [
                     ...dom.styles.form.label,
@@ -108,13 +96,16 @@ const elements = {
                 elem: document.createElement('div')
             });
         },
-        textArea: ({ rows, placeholder, name }) => {
+        textArea: ({ rows, placeholder, name, value }) => {
             const elem = addClasses({
                 classes: dom.styles.form.textArea,
                 elem: document.createElement('textarea')
             });
             elem.rows = rows;
             elem.placeholder = placeholder;
+            if (value) {
+                elem.value = value;
+            }
             elem.name = name;
 
             return elem;
@@ -123,36 +114,48 @@ const elements = {
             const elem = document.createElement('div');
             elem.id = 'form-footer';
             return elem;
+        },
+        moneyIcon: () => {
+            const money = document.createElement('div');
+            money.classList.add('input-icon');
+            const i = document.createElement('i');
+            i.textContent = '$';
+            money.appendChild(i);
+            return money;
         }
     }
 }
 
 export const components = {
     create: {
-        form: () => {
-            return document.createElement('form');
+        form: ({ onKeyUp, onKeyDown }) => {
+            const form = document.createElement('form');
+
+            if (onKeyUp) form.addEventListener('keyup', onKeyUp);
+            if (onKeyDown) form.addEventListener('keyup', onKeyDown);
+
+            return form;
         },
-        headerRow: ({ formElem, columns, isHeader = false }) => {
+        row: ({ formElem, columns, isHeader = false }) => {
             const formRow = elements.create.formRow();
             formElem.append(formRow);
-            return columns.reduce((row, curr) => {
+            return Object.values(columns).reduce((row, curr) => {
                 if (row)  {
-
                     const column = elements.create.column({
-                        classes: curr.name === 'Description' ? dom.styles.form.col2 : dom.styles.form.col1
+                        classes: curr.name === 'description' ? dom.styles.form.col2 : dom.styles.form.col1
                     });
 
                     let label;
                     if (isHeader) {
                         label = elements.create.label({
                             name: curr.name,
-                            id: curr.id,
+                            id: `${curr.id}-label`,
                             classes: []
                         });
                     } else {
                         label = elements.create.label({
                             name: curr.name,
-                            id: curr.id,
+                            id: `${curr.id}-label`,
                             classes: ['hide']
                         });
                     }
@@ -180,95 +183,78 @@ export const components = {
                     prependTextGroup.appendChild(prependText);
                     inputGroup.appendChild(prependTextGroup);
 
-                    // let elem = addClasses({
-                    //     classes: dom.styles.form.inputGroup,
-                    //     elem: document.createElement('div')
-                    // });
-                    // if (isPrepend) {
-                    //     elem = addClasses({
-                    //         classes: dom.styles.form.inputGroup,
-                    //         elem: elem
-                    //     });
-                    //     const prependText = addClasses({
-                    //         classes: dom.styles.form.inputGroupPrependText,
-                    //         elem: document.createElement('div')
-                    //     });
-                    //     prependText.textContent = 'test';
-                    //     elem.appendChild(prependText);
-                    // }
-                    // return elem;
-
-
                     let input;
-                    if (curr.inputType === 'text') {
+                    if (curr.type === 'text' && curr.name !== 'amount') {
                         input = applyAutoHeight({
                             element: elements.create.textArea({
                                 rows: '1',
                                 placeholder: curr.placeholder,
-                                name: curr.field
+                                name: curr.name,
+                                value: curr.value,
                             })
                         });
                     } else {
                         input = elements.create.input({
-                            placeholderText: curr.placeholder,
-                            inputType: curr.inputType,
-                            id: curr.field,
-                            name: curr.field,
+                            placeholder: curr.placeholder,
+                            type: curr.type,
+                            name: curr.name,
                             step: curr.step,
                             value: curr.value
                         });
                     }
 
+                    input.id = curr.id
+
+                    if (curr.onCreate) {
+                        curr.onCreate(input);
+                    }
+
+                    input = elements.create.moneyIcon().appendChild(input);
                     row.appendChild(column);
                     column.appendChild(label);
                     column.appendChild(inputGroup);
                     inputGroup.appendChild(input);
 
                     return row;
-
-                    // const headerCell = elements.create.headerField({ name: curr.name });
-                    // form.appendChild(headerCell);
                 }
             }, formRow);
         },
-        row: ({ formElem, columns }) => {
-            const formRow = elements.create.formRow();
-            formElem.append(formRow);
-            return columns.reduce((row, curr) => {
-                if (row)  {
+        taxRateInput: ({ taxRateInput, onKeyUp, onKeyDown }) => {
 
-                    const column = elements.create.column({
-                        classes: curr.name === 'Description' ? dom.styles.form.col2 : dom.styles.form.col1
-                    });
-                    const inputGroup = elements.create.inputGroup();
+            const inputGroup = addClasses({
+                classes: [],
+                elem: elements.create.inputGroup()
+            });
 
-                    let input;
-                    if (curr.inputType === 'text') {
-                        input = applyAutoHeight({
-                            element: elements.create.textArea({
-                                rows: '1',
-                                placeholder: curr.placeholder,
-                                name: curr.field
-                            })
-                        });
-                    } else {
-                        input = elements.create.input({
-                            id: curr.id,
-                            placeholderText: curr.placeholder,
-                            inputType: curr.inputType,
-                            name: curr.field,
-                            step: curr.step,
-                            value: curr.value
-                        });
-                    }
+            const prependTextGroup = addClasses({
+                classes: dom.styles.form.inputGroup,
+                elem: document.createElement('div')
+            });
 
-                    row.appendChild(column);
-                    column.appendChild(inputGroup);
-                    inputGroup.appendChild(input);
+            const prependText = addClasses({
+                classes: dom.styles.form.inputGroupPrependText,
+                elem: document.createElement('div')
+            });
+            prependText.textContent = taxRateInput.description;
 
-                    return row;
-                }
-            }, formRow);
-        },
+            const input = elements.create.input({
+                placeholder: taxRateInput.placeholder,
+                type: taxRateInput.type,
+                name: taxRateInput.name,
+                step: taxRateInput.step,
+                value: taxRateInput.value,
+            });
+            input.id = taxRateInput.id;
+
+            if (taxRateInput.onCreate) taxRateInput.onCreate(input);
+            if (onKeyUp) input.addEventListener('keyup', onKeyUp);
+            if (onKeyDown) input.addEventListener('keyup', onKeyDown);
+
+            prependTextGroup.appendChild(prependText);
+            inputGroup.appendChild(prependTextGroup);
+            inputGroup.appendChild(input);
+
+            return inputGroup;
+        }
     }
 }

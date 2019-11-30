@@ -10,11 +10,11 @@ import {
     createCustomerDetails,
     createDescription,
     createBillingAmounts,
-    createForm
+    createForm,
 } from './dom/invoice';
 
-import * as bootstrapValidate from 'bootstrap-validate';
-window.bootstrapValidate = bootstrapValidate;
+// import * as bootstrapValidate from 'bootstrap-validate';
+// window.bootstrapValidate = bootstrapValidate;
 
 const handlers = {
     billingAmounts:     (data) => createBillingAmounts(data),
@@ -37,10 +37,8 @@ const populateInvoice = ({ data }) => {
     }
 }
 
-// reset signature button for signature pad
 // separate form structure from form data
 // only add next row if there is no next row, or there is a next row but it's filled in
-// resize description field vertically
 // add tax rate input field, update amounts
 // format cost/amount fields after unfocusing a cell, format the money to two decimal places
 // format text field (shrink) after unfocusing a celll
@@ -50,5 +48,9 @@ const populateInvoice = ({ data }) => {
 
 populateInvoice({ data: exampleData });
 
-bootstrapValidate('#quantity', `regex:^[0-9]+$:Enter an positive integer`);
-bootstrapValidate('#cost', 'regex:^^-?[0-9]+(\.[0-9]{1,2})?$:Enter a dollar amount (2 decimals)');
+[
+    exampleData.form.taxRateInput,
+    exampleData.form.columns.quantity,
+    exampleData.form.columns.cost,
+].forEach((field) => field.validate());
+

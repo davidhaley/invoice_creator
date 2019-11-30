@@ -1,56 +1,54 @@
+import * as bootstrapValidate from 'bootstrap-validate';
+
+const formatTwoDecimalPlaces = (elem) => {
+    elem.addEventListener('change', function(e) {
+        this.value = currency(this.value);
+    });
+};
+
 export const exampleData = {
     companyDetails: [
         {
             name: 'Street Address',
             value: '123 Fake Street',
-            editable: false
         },
         {
             name: 'City',
             value: 'Fake City',
-            editable: false
         },
         {
             name: 'Postal Code',
             value: 'F4K-3D3',
-            editable: false
         },
         {
             name: 'Phone',
             value: '000-000-0000',
-            editable: false
         },
         {
             name: 'Website',
             value: 'example.com',
-            editable: false
         },
     ],
     customerDetails: [
         {
             name: 'Street Address',
             value: '456 Fake Street',
-            editable: false
         },
         {
             name: 'City',
             value: 'Fake City',
-            editable: false
         },
         {
             name: 'Postal Code',
             value: 'F4K-3D3',
-            editable: false
         },
         {
             name: 'Phone',
             value: '111-111-1111',
-            editable: false
         },
         {
             name: 'Website',
             value: 'example2.com',
-            editable: false
         }
     ],
     description: ``,
@@ -59,89 +57,101 @@ export const exampleData = {
         {
             name: 'Date',
             value: new Date().toLocaleDateString(),
-            editable: false
         },
         {
             name: 'Invoice No.',
             value: '534-12331212',
-            editable: false
         },
         {
             name: 'CustomerId',
             value: '999',
-            editable: false
         },
         {
             name: 'Due Date',
             value: new Date().toLocaleDateString(),
-            editable: false
         },
     ],
     billingAmounts: [
         {
             name: 'Sub Total',
             value: '$0.00',
-            editable: false,
             id: 'sub-total'
         },
         {
             name: 'Tax',
             value: '$0.00',
-            editable: false,
             id: 'tax'
         },
         {
             name: 'Total (CAD)',
             value: '$0.00',
-            editable: false,
             id: 'total'
         },
     ],
     form: {
         data: [],
-        columns: [
-            {
-                name: 'Title',
-                required: true,
+        columns: {
+            title: {
+                data: null,
+                field: 'title',
+                name: 'title',
                 placeholder: '',
-                data: null,
-                inputType: 'text',
-                field: 'title'
+                type: 'text',
+                value: undefined,
             },
-            {
-                name: 'Description',
-                required: true,
+            description: {
+                data: null,
+                field: 'description',
+                name: 'description',
                 placeholder: '',
-                data: null,
-                inputType: 'text',
-                field: 'description'
+                type: 'text',
+                value: undefined,
             },
-            {
-                name: 'Quantity',
-                required: true,
-                placeholder: '0',
+            quantity: {
                 data: null,
-                inputType: 'number',
                 field: 'quantity',
+                name: 'quantity',
+                placeholder: '0',
                 step: '0',
+                type: 'number',
+                value: undefined,
+                id: 'quantity',
+                validate:  () => bootstrapValidate('#quantity', `regex:^[0-9]+$:Enter an positive integer`),
             },
-            {
-                name: 'Cost ($/Unit)',
-                required: true,
-                placeholder: '$0.00',
+            cost: {
                 data: null,
-                inputType: 'number',
                 field: 'cost',
-                step: '0.01', // 2 Decimals
-            },
-            {
-                name: 'Line Amount',
-                required: true,
+                name: 'cost',
                 placeholder: '$0.00',
-                data: null,
-                field: 'amount',
                 step: '0.01', // 2 Decimals
+                type: 'number',
+                value: undefined,
+                id: 'cost',
+                validate:  () => bootstrapValidate('#cost', 'regex:^^-?[0-9]+(\.[0-9]{1,2})?$:Enter a dollar amount (2 decimals)'),
+                onCreate: (elem) => formatTwoDecimalPlaces(elem)
             },
-        ]
+            amount: {
+                data: null,
+                description: 'Line Amount',
+                input: 'number',
+                name: 'amount',
+                placeholder: '$0.00',
+                step: '0.01', // 2 Decimals
+                type: 'text',
+                value: undefined,
+            },
+        },
+        taxRateInput: {
+            name: 'taxrate',
+            description: 'Tax Rate (%)',
+            value: '5',
+            placeholder: '5%',
+            type: 'number',
+            id: 'tax-rate',
+            step: '0.01',
+            validate:  () => bootstrapValidate('#tax-rate', 'regex:^[0-9]+(\.[0-9]{1,2})?$:Enter a positive tax rate (2 decimals)'),
+            onCreate: (elem) => formatTwoDecimalPlaces(elem)
+        },
     }
 }
+
