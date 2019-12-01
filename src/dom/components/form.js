@@ -46,13 +46,7 @@ export const components = {
             });
             prependText.textContent = taxRateInput.description;
 
-            const input = elements.create.input({
-                placeholder: taxRateInput.placeholder,
-                type: taxRateInput.type,
-                name: taxRateInput.name,
-                step: taxRateInput.step,
-                value: taxRateInput.value,
-            });
+            const input = elements.create.input(taxRateInput);
             input.id = taxRateInput.id;
 
             if (taxRateInput.onCreate) taxRateInput.onCreate(input);
@@ -64,6 +58,11 @@ export const components = {
             inputGroup.appendChild(input);
 
             return inputGroup;
+        },
+        finalAuthAndPOInput: ({ taxRateInput, onKeyUp, onKeyDown }) => {
+            const input = components.create.taxRateInput({ taxRateInput, onKeyUp, onKeyDown });
+            input.classList.add('mb-4');
+            return input;
         }
     }
 }
@@ -114,32 +113,20 @@ const createInputGroup = ({ field }) => {
     inputGroup.appendChild(prependTextGroup);
 
     let input;
-    if (field.type === 'text' && field.name !== 'amount') {
+    if ((field.type === 'text') && (field.name !== 'amount')) {
         input = applyAutoHeight({
             element: elements.create.textArea({
                 rows: '1',
-                placeholder: field.placeholder,
-                name: field.name,
-                value: field.value,
+                ...field
             })
         });
     } else {
-        input = elements.create.input({
-            placeholder: field.placeholder,
-            type: field.type,
-            name: field.name,
-            step: field.step,
-            value: field.value
-        });
+        input = elements.create.input(field);
     }
 
     input.id = field.id
 
-    if (field.onCreate) {
-        field.onCreate(input);
-    }
-
-    input = elements.create.moneyIcon().appendChild(input);
+    if (field.onCreate) field.onCreate(input);
 
     inputGroup.appendChild(input);
 
@@ -180,7 +167,7 @@ export const elements = {
         },
         input: ({ placeholder, type, name, step, value }) => {
 
-            const input = addClasses({
+            let input = addClasses({
                 classes: dom.styles.form.input,
                 elem: document.createElement('input')
             });
@@ -188,6 +175,7 @@ export const elements = {
             input.type = type;
             input.name = name;
             input.step = step;
+
             if (value) {
                 input.value = value;
             }
@@ -260,13 +248,5 @@ export const elements = {
             elem.id = 'form-footer';
             return elem;
         },
-        moneyIcon: () => {
-            const money = document.createElement('div');
-            money.classList.add('input-icon');
-            const i = document.createElement('i');
-            i.textContent = '$';
-            money.appendChild(i);
-            return money;
-        }
     }
 }

@@ -121,7 +121,10 @@ const createShareInvoiceButton = ({ signatureContainer }) => {
                                     signaturePad: dom.select.signaturePad(),
                                     invoiceReturned
                                 });
-                                if (!invoiceReturned) {
+                                if (invoiceReturned) {
+                                    disableAllChildButtons({ parentElem: signatureContainer });
+                                    disableAllChildFields({ parentElem: signatureContainer });
+                                } else {
                                     invoiceReturned = true;
                                 }
                                 alert('Invoice Shared!');
@@ -161,24 +164,28 @@ const createSubmitButton = () => {
         onClick: () => {
             submitButtonCol.style.display = 'none';
             showShareInvoiceButton();
-            disableRowActionButtons();
-            disableFields();
+            disableAllChildButtons({ parentElem: dom.select.actionButtons() });
+            [
+                dom.select.description(),
+                dom.select.taxRateInput(),
+                dom.select.form()
+            ].forEach((parentElem) => disableAllChildFields({ parentElem }));
             scrollToBottomOfPage();
         }
     });
     submitButtonContainer.appendChild(submitButton);
 }
 
-export const disableFields = () => {
-    const formControls = Array.from(document.querySelectorAll('.form-control'));
+export const disableAllChildFields = ({ parentElem }) => {
+    const formControls = Array.from(parentElem.querySelectorAll('.form-control'));
     formControls.forEach((formControl) => {
         formControl.setAttribute('readonly', 'true');
         formControl.setAttribute('disabled', true);
     });
 }
 
-export const disableRowActionButtons = () => {
-    Array.from(dom.select.actionButtons().querySelectorAll('button')).forEach((button) => {
+export const disableAllChildButtons = ({ parentElem }) => {
+    Array.from(parentElem.querySelectorAll('button')).forEach((button) => {
         button.disabled = true;
         button.style.pointerEvents = 'none';
     });
@@ -221,6 +228,36 @@ export const createSignaturePad = ({ containerElem }) => {
         signaturePad.clear();
         sigButtonText.textContent = 'Sign Here';
     });
+    canvas.parentNode.insertBefore(
+        formComponents.create.finalAuthAndPOInput({
+            taxRateInput: {
+                name: 'purchaseorder',
+                description: 'Purchase Order:',
+                value: '',
+                placeholder: '',
+                type: 'text',
+                id: 'po',
+            },
+            onKeyUp: () => null,
+            onKeyDown: () => null
+        }),
+        canvas
+    );
+    canvas.parentNode.insertBefore(
+        formComponents.create.finalAuthAndPOInput({
+            taxRateInput: {
+                name: 'authorizedby',
+                description: 'Authorized By:',
+                value: '',
+                placeholder: '',
+                type: 'text',
+                id: 'authorized-by',
+            },
+            onKeyUp: () => null,
+            onKeyDown: () => null
+        }),
+        canvas
+    );
 }
 
 export const aggregateAmounts = ({ rows = [] }) => {
