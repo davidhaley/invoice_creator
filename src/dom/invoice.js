@@ -180,7 +180,7 @@ export const disableFields = () => {
 export const disableRowActionButtons = () => {
     Array.from(dom.select.actionButtons().querySelectorAll('button')).forEach((button) => {
         button.disabled = true;
-        button.setAttribute('pointer-events', 'none');
+        button.style.pointerEvents = 'none';
     });
 }
 
