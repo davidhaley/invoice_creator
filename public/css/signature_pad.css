@@ -18,6 +18,11 @@ body {
     width: 100%;
 }
 
+#signature-pad {
+    outline: rgb(26, 149, 255) solid 3px;
+    background:url('../images/paperfibers.png');
+}
+
 #signature {
     font-weight: bold;
     height: 100%;
@@ -34,10 +39,32 @@ body {
     padding-bottom: 14px;
     width: 100%;
     text-align: left;
+    /* pointer-events: none; */
+}
+
+#signature-button-text {
+    /* pointer-events: none; */
+}
+
+#signature-button.btn-info.disabled  {
+    border-color: #31BCD2 !important;
+}
+
+#signature-button {
+    width: 100%;
+    transition: 'color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out';
+    /* pointer-events: auto; */
+}
+#signature-button.disabled {
+    /* pointer-events: none; */
+    border-radius: unset;
+    /* color: #343a40; */
+    /* font-weight: bold; */
+    /* background-color: grey; */
 }
 
 .signature-component {
-    background:url('../images/paperfibers.png');
+    /* background:url('../images/paperfibers.png'); */
     text-align: left;
     display: inline-block;
     max-width: 100%;

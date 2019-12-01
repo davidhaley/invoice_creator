@@ -71,7 +71,7 @@
     "setupFilesAfterEnv": [
       "./tests/config/test-framework-setup.js"
     ],
-    "verbose": true
+    "verbose": false
   },
   "transform": {
     "\\.js$": "./test/jest-transform.js"

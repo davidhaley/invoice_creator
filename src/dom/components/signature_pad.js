@@ -11,7 +11,7 @@
  * Copyright 2016 Szymon Nowak
  * Released under the MIT license
  */
-var SignaturePad = (function(document) {
+export const SignaturePad = (function(document) {
     "use strict";
 
     var log = console.log.bind(console);
@@ -73,6 +73,9 @@ var SignaturePad = (function(document) {
         };
 
         this._handleTouchStart = function(event) {
+            if (event.cancelable) {
+                event.preventDefault();
+            }
             if (event.targetTouches.length == 1) {
                 var touch = event.changedTouches[0];
                 self._strokeBegin(touch);
@@ -80,9 +83,11 @@ var SignaturePad = (function(document) {
         };
 
         var _handleTouchMove = function(event) {
-            // Prevent scrolling.
-            event.preventDefault();
+            if (event.cancelable) {
+                event.preventDefault();
+            }
 
+            // Prevent scrolling.
             var touch = event.targetTouches[0];
             self._strokeUpdate(touch);
             if (self.arePointsDisplayed) {
@@ -96,7 +101,9 @@ var SignaturePad = (function(document) {
         this._handleTouchEnd = function(event) {
             var wasCanvasTouched = event.target === self._canvas;
             if (wasCanvasTouched) {
-                event.preventDefault();
+                if (event.cancelable) {
+                    event.preventDefault();
+                }
                 self._strokeEnd(event);
             }
         };
@@ -431,17 +438,17 @@ var SignaturePad = (function(document) {
     return SignaturePad;
 })(document);
 
-var signaturePad = new SignaturePad(document.getElementById('signature-pad'), {
-    backgroundColor: 'rgba(255, 255, 255, 0)',
-    penColor: 'rgb(0, 0, 0)',
-    velocityFilterWeight: .7,
-    minWidth: 0.5,
-    maxWidth: 2.5,
-    throttle: 16, // max x milli seconds on event update, OBS! this introduces lag for event update
-    minPointDistance: 3,
-});
+// var signaturePad = new SignaturePad(document.getElementById('signature-pad'), {
+//     backgroundColor: 'rgba(255, 255, 255, 0)',
+//     penColor: 'rgb(0, 0, 0)',
+//     velocityFilterWeight: .7,
+//     minWidth: 0.5,
+//     maxWidth: 2.5,
+//     throttle: 16, // max x milli seconds on event update, OBS! this introduces lag for event update
+//     minPointDistance: 3,
+// });
 // var saveButton = document.getElementById('save'),
-//     clearButton = document.getElementById('clear'),
+    // clearButton = document.getElementById('clear'),
 //     showPointsToggle = document.getElementById('showPointsToggle');
 
 // saveButton.addEventListener('click', function(event) {

@@ -13,19 +13,9 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 { margin-top: 0; }
-
 strong { color: darken(slategrey,20%); }
 
-#title {
-    padding-bottom: 12px;
-    text-align: center;
-}
-
-#billing-info,
-#billing-amounts {
-    float: right;
-    margin-right: 64px;
-}
+#billing-info, #billing-amounts { float: right; }
 
 #billing-info .field:first-child,
 #billing-info .field:last-child,
@@ -36,17 +26,14 @@ strong { color: darken(slategrey,20%); }
     font-weight: bold;
 }
 
-#customer-details {
-    margin-left: 32px;
-}
+#customer-details { margin-left: 32px; }
+#terms { font-size: 0.9em; }
 
-#terms {
-    font-size: 0.9em;
+#title {
+    padding-bottom: 12px;
+    text-align: center;
 }
-
-.title-small  {
-    margin-top: 48px;
-}
+.title-small  { margin-top: 48px; }
 
 .subtitle-small {
     font-size: 16px;
@@ -59,53 +46,34 @@ strong { color: darken(slategrey,20%); }
 
 /* Form */
 
-.form-group .textarea {
-    height: 100%;
-}
-
-#form-action-buttons {
-    float: right;
-}
-
-#form-action-buttons .btn-secondary {
-    margin: '0 10px 0 0';
-}
-
-#form-action-buttons .btn {
-    margin: 4px;
-}
-
-/* textarea {
-    text-align: left;
-} */
-
-form {
-    margin-bottom: 10px;
-}
+.form-group .textarea { height: 100%; }
+#form-action-buttons { float: right; }
+#form-action-buttons .btn-secondary { margin: '0 10px 0 0'; }
+#form-action-buttons .btn { margin: 4px; }
+form { margin-bottom: 10px; }
 
 .control-label {
     text-align: center;
+    margin: 0 auto;
 }
 
+.input-group-prepend-text,
+.label-text {
+    display: block;
+    margin: 0 auto;
+}
 
 /* Field */
 
-.fields-container {
-    display: flex;
-}
-
-.field {
-    display: flex;
-}
+.hide { display: none !important; }
+#amount { background-color: rgb(181, 187, 193, 0.5); }
+.fields-container, .field { display: flex; }
+.field-name { padding-right: 1em; }
 
 .fields-group {
     flex-wrap: wrap;
-    margin: 0 0 3em 0;
+    margin: 0 0 1em 0;
     padding: 0;
-}
-
-.field-name {
-    padding-right: 1em;
 }
 
 .field-value {
