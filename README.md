@@ -4,6 +4,8 @@
 
 Instructions:
 
+***[Note: Chrome browser recommended]***
+
 1. Install: `npm install`
 2. Run Unit-Tests: `npm run test`
 
@@ -16,14 +18,14 @@ or
 
 ### Features:
 
-- Append invoice line-items to the end of the line-item list (click 'Append New Line-Item') [Tip: auto-create a new row, pressing (Tab) while focusing the last cell in the last row (note: the amount must not be empty)]:
+- Append invoice line-items to the end of the line-item list (click 'Append New Line-Item') *[Tip: Auto-create a new row, pressing (Tab) while focusing the last cell in the last row (note: the amount must not be empty)]*:
     - Title
     - Description
     - Quantity (+ integer)
     - Cost ($/Qty) (+/-, 2 decimals)
     - Line Amount (read-only, +/- 2 decimals)
 - Input a tax amount (2 decimals, default 5%)
-- Delete the last line-item (click 'Delete Last Line-Item') [Tip: press (Shift + Tab) while focusing the first cell in the last row (note: the amount must be empty)]
+- Delete the last line-item (click 'Delete Last Line-Item') *[Tip: press (Shift + Tab) while focusing the first cell in the last row (note: the amount must be empty)]*
 - Invoice Description (500 characters), including a character-count progress bar
 - Save the invoice (emulated) (locks input fields)
     - Share the invoice with the customer (emulated) (locks input fields)
