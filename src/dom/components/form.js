@@ -76,13 +76,13 @@ const createLabel = ({ field, isHeader }) => {
     let label;
     if (isHeader) {
         label = elements.create.label({
-            name: field.name,
+            name: field.description,
             id: `${field.id}-label`,
             classes: []
         });
     } else {
         label = elements.create.label({
-            name: field.name,
+            name: field.description,
             id: `${field.id}-label`,
             classes: ['hide']
         });
@@ -107,7 +107,7 @@ const createInputGroup = ({ field }) => {
         classes: dom.styles.form.inputGroupPrependText,
         elem: document.createElement('div')
     });
-    prependText.textContent = field.name;
+    prependText.textContent = field.description;
 
     prependTextGroup.appendChild(prependText);
     inputGroup.appendChild(prependTextGroup);

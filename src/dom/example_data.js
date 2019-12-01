@@ -94,6 +94,7 @@ export const exampleData = {
             title: {
                 data: null,
                 field: 'title',
+                description: 'Title',
                 name: 'title',
                 placeholder: '',
                 type: 'text',
@@ -102,6 +103,7 @@ export const exampleData = {
             description: {
                 data: null,
                 field: 'description',
+                description: 'Description',
                 name: 'description',
                 placeholder: '',
                 type: 'text',
@@ -110,6 +112,7 @@ export const exampleData = {
             quantity: {
                 data: null,
                 field: 'quantity',
+                description: 'Quantity',
                 name: 'quantity',
                 placeholder: '0',
                 step: '0',
@@ -121,6 +124,7 @@ export const exampleData = {
             cost: {
                 data: null,
                 field: 'cost',
+                description: 'Cost ($/Qty)',
                 name: 'cost',
                 placeholder: '$0.00',
                 step: '0.01', // 2 Decimals
